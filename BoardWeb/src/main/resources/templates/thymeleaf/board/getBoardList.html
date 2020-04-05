@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- <html xmlns:th="http://www.thymeleaf.org"> -->
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
+<title>게시글 목록</title>
+</head>
+<body th:align="center">
+
+	<h1>게시글 목록</h1>
+	<span sec:authorize="isAuthenticated()"> <b><font color="red"> 
+	<span sec:authentication="principal.member.name"></span>
+		</font></b> 님 환영합니다...................................... 
+		<a th:href="@{/system/logout}">로그아웃</a> &nbsp;&nbsp;&nbsp; 
+		<a th:href="@{/admin/adminPage}">게시판관리</a>
+	</span>
+	<hr>
+	<!-- 검색시작 -->
+	<form th:action="@{/board/getBoardList/search}" method="post">
+		<table th:align="center" border="1" th:cellpadding="0"
+			th:cellspacing="0" th:witdh="700">
+			<tr>
+				<td align="right">
+					<!-- 검색키워드 --> <select name="searchCondition">
+						<option value="TITLE">제목</option>
+						<option value="CONTENT">내용</option>
+				</select> <input name="searchKeyword" type="text" /> <input type="submit"
+					value="검색" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<!-- 검색종료 -->
+	<br>
+	<table th:align="center" border="1" th:cellpadding="0"
+		th:cellspacing="0" th:width="700">
+		<tr>
+			<th bgcolor="skyblue" width="50">번호</th>
+			<th bgcolor="skyblue" width="400">제목</th>
+			<th bgcolor="skyblue" width="100">작성자</th>
+			<th bgcolor="skyblue" width="100">등록일</th>
+			<th bgcolor="skyblue" width="50">조회수</th>
+		</tr>
+
+
+		<tr th:each="board, state:${boardList}">
+			<td th:text="${state.count}" th:align="center">
+			<td><a th:href="@{/board/getBoard(seq=${board.seq})}"
+				th:text="${board.title}"></a></td>
+			<td th:text="${board.member.name}" th:align="center">
+			<td th:text="${#temporals.format(board.createDate,'yyyy-MM-dd')}"
+				th:align="center">
+				<!-- localdatetime 객체는 위와 같이 #temporals로 치환하여 쓴다. -->
+			<td th:text="${board.cnt}" th:align="center">
+		</tr>
+
+	</table>
+	<br>
+	<a th:href="@{/board/insertBoard}">게시글 등록</a>
+	<br>
+	<nav style="text-align: center;">
+		<!-- 
+    th:with는 해당 태그를 scope로 갖는 변수를 선언할 수 있게 해주는 속성이다.
+start=${T(Math).floor(boardList.number/10)*10 + 1} : 현제 페이지를 통해 현재 페이지 그룹의 시작 페이지를 구하는 로직이다.
+last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages}) : 전체 페이지 수와 현재 페이지 
+그룹의 시작 페이지를 통해 현재 페이지 그룹의 마지막 페이지를 구하는 로직이다.
+     -->
+		<ul class="pagination"
+			th:with="start=${T(Math).floor(boardList.number/10)*10 + 1},
+                    last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+			<li><a th:href="@{/board/getBoardList(page=1)}"
+				aria-label="First"> <span aria-hidden="true">First</span>
+			</a></li>
+
+			<li th:class="${boardList.first} ? 'disabled'"><a
+				th:href="${boardList.first} ? '#' :@{/board/getBoardList(page=${boardList.number})}"
+				aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+			</a></li>
+
+			<li th:each="page: ${#numbers.sequence(start, last)}"
+				th:class="${page == boardList.number + 1} ? 'active'"><a
+				th:text="${page}" th:href="@{/board/getBoardList(page=${page})}"></a></li>
+
+			<li th:class="${boardList.last} ? 'disabled'"><a
+				th:href="${boardList.last} ? '#' : @{/board/getBoardList(page=${boardList.number + 2})}"
+				aria-label="Next"> <span aria-hidden="true">&gt;</span>
+			</a></li>
+
+			<li><a
+				th:href="@{/board/getBoardList(page=${boardList.totalPages})}"
+				aria-label="Last"> <span aria-hidden="true">Last</span>
+			</a></li>
+		</ul>
+	</nav>
+</body>
+</html>

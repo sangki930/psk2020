@@ -39,6 +39,7 @@ public class BoardRepositoryTest {
                         .enabled(true)
                         .build();
         
+    
         
         memberRepo.save(member);
         
