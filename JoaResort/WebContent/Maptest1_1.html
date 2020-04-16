@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Showing Pixel and Tile Coordinates</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+    
+    var lat = 37.3860521;
+    	var longti= 127.1214038;
+    
+      function initMap() {
+        var joaResort = new google.maps.LatLng(lat, longti);
+			//joaResort라는 객체 선언
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: joaResort,
+          zoom: 15
+        });
+
+        var coordInfoWindow = new google.maps.InfoWindow();
+        coordInfoWindow.setContent(createInfoWindowContent(joaResort, map.getZoom()));
+        coordInfoWindow.setPosition(joaResort);
+        coordInfoWindow.open(map);
+
+        map.addListener('zoom_changed', function() {
+          coordInfoWindow.setContent(createInfoWindowContent(joaResort, map.getZoom()));
+          coordInfoWindow.open(map);
+        });
+      }
+
+      var TILE_SIZE = 256;
+
+      function createInfoWindowContent(latLng, zoom) {
+        var scale = 1 << zoom;
+
+        var worldCoordinate = project(latLng);
+
+        var pixelCoordinate = new google.maps.Point(
+            Math.floor(worldCoordinate.x * scale),
+            Math.floor(worldCoordinate.y * scale));
+
+        var tileCoordinate = new google.maps.Point(
+            Math.floor(worldCoordinate.x * scale / TILE_SIZE),
+            Math.floor(worldCoordinate.y * scale / TILE_SIZE));
+
+        /*
+        return [
+          'Chicago, IL',
+          'LatLng: ' + latLng,
+          'Zoom level: ' + zoom,
+          'World Coordinate: ' + worldCoordinate,
+          'Pixel Coordinate: ' + pixelCoordinate,
+          'Tile Coordinate: ' + tileCoordinate
+        ].join('<br>');
+        */
+        return [
+            '조아리조트',
+            '위도: ' + lat,
+            '경도: ' + longti,
+            'Zoom level: ' + zoom,
+          ].join('<br><br>');
+        //join : 배열 중간에 '<br>'을 삽입
+        
+      }
+
+      // The mapping between latitude, longitude and pixels is defined by the web
+      // mercator projection.
+      function project(latLng) {
+        var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
+        // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+        // about a third of a tile past the edge of the world tile.
+        siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+        return new google.maps.Point(
+            TILE_SIZE * (0.5 + latLng.lng() / 360),
+            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_e-W237WxWJmJFw4MjdooNs_3Rj7hGR0&callback=initMap">
+    </script>
+  </body>
+</html>

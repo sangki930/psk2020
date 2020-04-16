@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 
 public class ModernJavaTest {
 
@@ -12,6 +14,7 @@ public class ModernJavaTest {
 					System.out.println("aa");}
 		}
 		
+		Set<String> set = new HashSet<>();
 
 	}
 

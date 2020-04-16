@@ -1,0 +1,174 @@
+body
+{
+	margin : 0;
+	padding : 0;
+	font-family : sans-serif;
+}
+#idheader
+{
+	position: absolute;/*절대 위치*/
+	top : 50px;
+	left : 0;
+	padding : 0 100px;
+	background : #262626;
+	width : 100%;
+	box-sizing : border-box;
+	
+}
+#idheader #logo
+{
+	color : #fff;
+	height : 50px;
+	line-height : 50px;
+	font-size : 24px;
+	float : left;
+	font-weight : bold;
+	
+}
+
+#idheader #logo a{
+	color : #fff;
+	text-decoration : none;
+}
+#idheader #header_nav{
+	float :  right;
+}
+#idheader #header_nav #lists{
+	margin : 0;
+	padding : 0;
+	display : flex;
+	list-style : none;
+}
+#idheader #header_nav #lists li
+{
+	
+	position : relative;
+}
+#idheader #header_nav #lists li.sub-menu:before{
+	content : '\f0d7';
+	font-family : fontAwesome;
+	position : absolute;
+	line-height : 50px;
+	color : #fff;
+	right : 5px;
+}
+#idheader #header_nav #lists li.active_nav.sub-menu:before
+{
+	content : '\f0d8';
+	
+}
+#idheader #header_nav #lists li ul{
+	position : absolute;
+	left : 0;
+	background : #333;
+	display : none;
+	
+}
+
+#idheader #header_nav #lists li.active_nav ul{
+	display:block;
+}
+
+#idheader #header_nav #lists li ul li{
+	list-style : none;
+	display : block;
+	width : 200px;
+	text-overflow:clip;
+}
+
+#idheader #header_nav #list li ul.active_nav{
+	
+	display: block;
+}
+
+#idheader #header_nav #lists li.active_nav ul{
+	display : block;
+}
+
+#idheader #header_nav #lists li a{
+	height : 50px;
+	line-height : 50px;
+	padding : 0 20px;
+	color : #fff;
+	text-decoration : none;
+	
+	display : block;
+}
+#idheader #header_nav #lists li a:hover,
+#idheader #header_nav #lists li a:active
+{
+	color : #fff;	
+	background  : #2196f3;
+}
+.menu-toggle/*메뉴바 설정*/
+{
+	color : #fff;
+	float : right;
+	line-height : 50px;
+	font-size : 24px;
+	cursor : pointer;
+	display : none;/*PC상에서는 감춤*/
+}
+
+/*여기 까지가 공통*/
+@media (max-width : 768px)
+{
+	
+	#idheader
+	{
+		padding : 0 20px;
+		z-index : 30;
+	}
+	
+	.menu-toggle
+	{
+		display : block;
+		z-index : 30;
+	}
+	#idheader #header_nav
+	{
+		/**display : none;*/
+		position : absolute;
+		width : 100%;
+		height : calc(100vh - 50px);
+		/*vh : vertical height -> 뷰포트(브라우저의)의 높이값*/
+		background : #333;
+		top : 50px;
+		left : -100%;
+		transition : 0.5s;
+		z-index : 30;
+		
+	}
+	#idheader #header_nav.active_nav
+	{
+		left : 0;
+		z-index : 30;
+	}
+	#idheader #header_nav #lists
+	{
+		display : block;
+		text-align : center;
+		z-index : 30;
+	}
+	
+	#idheader #header_nav #lists li a
+	{
+		border-bottom : 1px solid rgba(0,0,0,.2);
+		z-index : 30;
+	}
+	
+	#idheader #header_nav #lists li.active_nav ul
+	{
+		position : relative;
+		background : #003e6f;
+		z-index : 30;
+	}
+	#idheader #header_nav #lists li ul li
+	{
+		display : block;
+		width : 100%;
+		z-index : 30;
+	}
+	
+}
+

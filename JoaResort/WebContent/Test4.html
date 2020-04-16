@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="style3.css">
+<link rel="stylesheet" href="style4.css">
+<style>
+html,body{
+	height: 100%;
+}
+.wrap {
+    display: flex;
+    flex-direction: column;
+		height: 100%;
+}
+.header {
+  height: 80px;
+  background-color: #00c73c;
+}
+.tablist {
+    height: 70px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1);
+    background-color: white;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+}
+.aside {
+    display: flex;
+    flex: none;
+    width: 400px;
+    background-color: #bfbab078;
+}
+.main{
+    display: flex;
+    flex: 1;
+    overflow: auto;
+}
+
+</style>
+</head>
+<body>
+<div id="wrap" class="wrap">
+  <header class="header">
+  <div class="menu-bar">
+
+<ul>
+<li><img src="joaresort.jpg" width = 100 height = 50><a href="#"></a></li>
+<!--
+<li class="active"><a href="#"><i class="fa fa-home"></i>Home</a></li>
+-->
+<li><a href="#"><br><i class="fa fa-user"></i>리조트소개</a>
+<div class="sub-menu-1">
+	<ul>
+		<li><a href="#">조아리조트</a></li>
+		<li><a href="#">VIP룸</a></li>
+		<li><a href="#">일반룸</a></li>
+		<li><a href="#">합리적인룸</a></li>
+	</ul>
+</div></li>
+
+<li><a href="#"><br><i class="fa fa-clone"></i>찾아오기</a>
+<div class="sub-menu-1">
+	<ul>
+		<li><a href="#">찾아오는 길</a></i></li>
+		<li class="hover-me"><a href="#">Marketing</a><i class="fa fa-angle-right"></i>
+			<div class="sub-menu-2">
+				<ul>
+				<li><a href="#">대중교통이용</a></li>
+				<li><a href="#">자가용 이용</a></li>
+				<li><a href="#">셔틀버스 이용</a></li>
+			</ul>
+			</div>
+
+		</li>
+		</li>
+		<li class="hover-me"><a href="#">(비활성화)</a><i class="fa fa-angle-right"></i>
+			<div class="sub-menu-2">
+				<ul>
+				<li><a href="#">(비활성화)</a></li>
+				<li><a href="#">(비활성화)</a></li>
+				<li><a href="#">(비활성화)</a></li>
+				<li><a href="#">(비활성화)</a></li>
+				<li><a href="#">(비활성화)</a></li>
+			</ul>
+
+			</div>
+
+		</li>
+	</ul>
+</div>
+</li>
+<li><a href="#"><br><i class="fa fa-users"></i>주변여행지</a>
+	<div class="sub-menu-1">
+	<ul>
+		<li><a href="#">높아산</a></li>
+		<li><a href="#">조아해수욕장</a></li>
+		<li><a href="#">따끈온천</a></li>
+	</ul>
+</div>
+
+</li>
+<li><a href="#"><br><i class="fa fa-phone"></i>예약하기</a>
+<div class="sub-menu-1">
+	<ul>
+		<li><a href="#">조아리조트</a></li>
+		<li><a href="#">VIP룸</a></li>
+
+	</ul>
+</div>
+
+</li>
+<li><a href="#"><br><i class="fa fa-inr"></i>팬션소식</a>
+<div class="sub-menu-1">
+	<ul>
+		<li><a href="#">공지사항</a></li>
+		<li><a href="#">이용후기</a></li>
+	</ul>
+</div></li>
+</ul>
+</div>
+  
+  
+  
+  </header>
+  <div class="tablist">
+  <div class="slidershow middle">
+		<div class="slides">
+			<div class="slide">
+				<input type="radio" name="r" id="r1" checked>
+				<input type="radio" name="r" id="r2">
+				<div class="slide">
+					<img src="slider_image.jpg" alt="">
+				</div>
+				<div class="slide">
+					<img src="slider_image2.jpg" alt="">
+				</div>
+			</div>
+		<div class="navigation">
+			<label for="r1" class="bar"></label>
+			<label for="r2" class="bar"></label>
+		</div>
+		
+		</div>	
+		
+		
+	</div>
+  
+  </div>
+  <div class="content">
+    <div class="aside">3</div>
+    <div class="main">4</div>
+  </div>
+</div>
+
+</body>
+</html>
