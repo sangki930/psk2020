@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border=1>
+		<tr>
+				<td><input type="checkbox" id="checkbox_all" name="selectAll" value="selectAll">전체선택</td>
+				<td>순서번호</td>
+				<td>아이디</td>
+				<td>이름</td>
+				<td>이메일</td>
+				<td>연락처</td>
+				<td>생년월일</td>
+				<td>성별</td>
+				<td>상세</td>
+			</tr>
+		<tr th:each="search : ${deletelist}">
+				<td><input type="checkbox" name="select" value="select"></td>
+				<td>111</td>
+				<td th:text="${search.username}"></td>
+				<td th:text="${search.getName()}"></td>
+				<td th:text="${search.getEmail()}"></td>
+				<td th:text="${search.getTel()}"></td>
+				<td th:text="${search.getBirth()}"></td>
+				<td th:text="${search.getGender()}"></td>
+				<td></td>
+			</tr>
+	</table>
+</body>
+</html>

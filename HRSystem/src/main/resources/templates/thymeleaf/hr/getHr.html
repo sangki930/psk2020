@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head 
+th:with="nextnum_edu=${#lists.size(hr.edus)}>0?${hr.getEdus().get(#lists.size(hr.edus)-1).getId()+1}:1,
+nextnum_career=${#lists.size(hr.careers)}>0?${hr.getCareers().get(#lists.size(hr.careers)-1).getId()+1}:1,
+nextnum_qualified=${#lists.size(hr.qualifieds)}>0?${hr.getQualifieds().get(#lists.size(hr.qualifieds)-1).getId()+1}:1,
+cnt_edu=${#lists.size(hr.edus)}, cnt_career=${#lists.size(hr.careers)},cnt_qualified=${#lists.size(hr.qualifieds)},hrid=${hr.id}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<link href="/static/css/common.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script th:inline="javascript">
+/*학력 CRUD*/
+/* <![CDATA[ */
+	var hrid=/*[[ ${hrid} ]]*/
+	/*hrid : hr의 ID값*/
+				/* ]]> */
+</script>
+<script src="/static/js/getHr.js"></script>
+</head>
+<style>
+body {
+	font-family: Arial;
+}
+.insert{
+	width:90%;
+}
+.update{
+	width:90%;
+}
+</style>
+</head>
+<body th:with="nextnum_edu=${#lists.size(hr.edus)}>0?${hr.getEdus().get(#lists.size(hr.edus)-1).getId()+1}:1,
+nextnum_career=${#lists.size(hr.careers)}>0?${hr.getCareers().get(#lists.size(hr.careers)-1).getId()+1}:1,
+nextnum_qualified=${#lists.size(hr.qualifieds)}>0?${hr.getQualifieds().get(#lists.size(hr.qualifieds)-1).getId()+1}:1,
+cnt_edu=${#lists.size(hr.edus)}, cnt_career=${#lists.size(hr.careers)},cnt_qualified=${#lists.size(hr.qualifieds)},hrid=${hr.id}">
+<!-- 타임리프로 변수 선언 -->
+	<table th:insert="thymeleaf/user/head::#head">
+	</table>
+	<table border="1" width="100%" id="wrapper">
+		<tr>
+			<td id="menu" style="border-bottom: hidden;">
+				<div id="test" th:insert="thymeleaf/user/menutable::#menutable">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="contents" height="700px">
+				<div id="area" align="center">
+					<h3>인사 기본 상세</h3>
+					<form name="hrform" th:action="@{/hr/updateHr}">
+					<input type="hidden" name="id" th:value="${hr.id}" />
+					<input type="hidden" name="userId" th:value="${hr.getUserItem().userId}" />
+					<table id="detail" width="71.5%" border="1">
+					
+						<tr>
+							<td bgcolor="skyblue" width="15%">사원번호</td>
+							<td width="35%">
+								
+								<input type="number" name="empId" th:value="${hr.empId}" />
+							</td>
+							<td bgcolor="skyblue" width="15%">주민등록번호</td>
+							<td width="35%">
+								<input type="text" name="juminId" th:value="${hr.juminId}" />
+							</td>
+						</tr>
+						<tr>
+							<td bgcolor="skyblue" width="15%">성명</td>
+							<td width="35%" th:text="${hr.getUserItem().name}">
+								<input type="hidden" name="username" th:value="${hr.getUserItem().name}" />
+							</td>
+							<td bgcolor="skyblue" width="15%">영문성명</td>
+							<td width="35%">
+							<input type="text" name="engname" th:value="${hr.engname}" />
+							</td>
+						</tr>
+						
+						<tr>
+							<td bgcolor="skyblue" width="15%">직위/직급</td>
+							<td width="35%">
+							<input type="text" name="rank_name" th:value="${hr.rank_name}" />
+							</td>
+							<td bgcolor="skyblue" width="15%">직책</td>
+							<td width="35%">
+								<input type="text" name="position" th:value="${hr.position}">
+							</td>
+						</tr>
+						
+						<tr>
+							<td bgcolor="skyblue" width="15%">부서</td>
+							<td width="35%">
+								<select name="hrDept">
+								<!-- 생산팀, 인사팀, 개발팀, 연구팀, 캐피탈사업팀 -->										
+								<!-- <option value="selectColumn">부서 선택</option> -->
+										<option value="개발부서선택" th:text="개발부서선택"
+										th:selected="${#strings.equals(hr.hrDept,'')?true:false}"></option>
+										<option value="생산팀" th:text="생산팀"
+										th:selected="${#strings.equals(hr.hrDept,'생산팀')?true:false}"></option>
+										<option value="인사팀" th:text="인사팀"
+										th:selected="${#strings.equals(hr.hrDept,'인사팀')?true:false}">
+										</option>
+										<option value="개발팀" th:text="개발팀"
+										th:selected="${#strings.equals(hr.hrDept,'개발팀')?true:false}"></option>
+										<option value="연구팀" th:text="연구팀"
+										th:selected="${#strings.equals(hr.hrDept,'연구팀')?true:false}"></option>
+										<option value="연구팀" th:text="캐피탈사업팀"
+										th:selected="${#strings.equals(hr.hrDept,'캐피탈사업팀')?true:false}"></option>
+								</select>
+							</td>
+							<td bgcolor="skyblue" width="15%">모바일</td>
+							<td width="35%"><input type="text" name="tel" th:value="${hr.getUserItem().tel}"/></td>
+						</tr>
+						
+						<tr>
+							<td bgcolor="skyblue" width="15%">국적</td>
+							<td width="35%">
+							<label><input type="radio" name="nationality"
+										th:value="1" th:checked="${hr.nationality}?true:false">내국인</label> 
+										<label><input type="radio"
+										name="nationality" th:value="0"
+										th:checked="${hr.nationality}==false?true:false"> 외국인</label>
+							</td>
+							<td bgcolor="skyblue" width="15%">근무
+								
+							</td>
+							<td width="35%"><select name="typeWorking">
+										<option value="근무구분선택" th:text="근무구분선택"
+										th:selected="${#strings.equals(hr.typeWorking,'')?true:false}"></option>
+										<option value="근무" th:text="근무"
+										th:selected="${#strings.equals(hr.typeWorking,'근무')?true:false}"></option>
+										<option value="휴직" th:text="휴직"
+										th:selected="${#strings.equals(hr.typeWorking,'휴직')?true:false}"></option>
+										<option value="퇴사" th:text="퇴사"
+										th:selected="${#strings.equals(hr.typeWorking,'퇴사')?true:false}"></option>
+								</select></td>
+						</tr>
+						<tr>
+							<td bgcolor="skyblue" width="15%">입사일</td>
+							<td width="35%">
+							<!-- <input type="date" name="entered" th:value="${hr.entered}"/> -->
+							<input type="date" name="entered" th:value="*{hr.entered}" th:field="*{hr.entered}"/>
+							</td>
+							<td bgcolor="skyblue" width="15%">입사구분</td>
+							<td width="35%">
+								<select name="typeEntrance">
+								<option value="입사구분선택" th:text="입사구분선택"
+										th:selected="${#strings.equals(hr.typeEntrance,'')?true:false}"></option>
+								<option value="정직원" th:text="정직원"
+										th:selected="${#strings.equals(hr.typeEntrance,'정직원')?true:false}"></option>
+								<option value="비정규직" th:text="비정규직"
+										th:selected="${#strings.equals(hr.typeEntrance,'비정규직')?true:false}"></option>	
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td bgcolor="skyblue" width="15%">퇴사일</td>
+							<td width="35%"><input type="date" name="exited" th:value="${hr.exited}"/></td>
+							<td bgcolor="skyblue" width="15%"></td>
+							<td width="35%">
+								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="left">
+								<input type="button" value="삭제" name="deletehr" th:attr="onclick=|location.href='@{/hr/deleteHr(id=${hr.id})}'|"/>
+							</td>
+							<td colspan="2" align="right">
+								<input type="submit" name="updatehr" value="수정">
+								<input type="button" name="list" value="목록">
+							</td>
+						</tr>
+						
+					</table>
+					</form>
+				<!-- 	<script>
+						$('[name="updatehr"]').click(function(){ //댓글 등록 버튼 클릭시 
+						    var insertData = $('[name=hrform]').serialize(); //commentInsertForm의 내용을 가져옴
+						    alert(insertData);
+						});
+					</script> -->
+					<div class="tab">
+						<button class="tablinks" onclick="openCity(event, 'person')" id="persontab">인사 상세</button>
+						<button class="tablinks" onclick="openCity(event, 'school')">학력</button>
+						<button class="tablinks" onclick="openCity(event, 'career')">경력사항</button>
+						<button class="tablinks" onclick="openCity(event, 'qualified')">자격사항</button>
+					</div>
+
+					<div id="person" class="tabcontent">
+					<form name="hrformdetail" th:action="@{/hr/detail}">
+					<input type="hidden" name="id" th:value="${hr.id}" />
+					<input type="hidden" name="userId" th:value="${hr.getUserItem().userId}" />
+						<table border="1" width="90%">
+							<tr>
+								<td bgcolor="skyblue">전화번호</td>
+								<td><!-- <input type="text" value=""> -->[[${hr.getUserItem().tel}]]</td>
+								<td bgcolor="skyblue">핸드폰번호</td>
+								<td><input type="text" name="tel" th:value="${hr.getUserItem().tel}"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">E-mail</td>
+								<td><input type="text" name="email" th:value="${hr.getUserItem().email}"></td>
+								<td bgcolor="skyblue">최종학력</td>
+								<td><input type="text" name="typeEntrance" th:value="${hr.typeEntrance}"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">장애유형</td>
+								<td><input type="text" name="typeObstacle" th:value="${hr.typeObstacle}"></td>
+								<td bgcolor="skyblue">차량번호</td>
+								<td><input type="text" name="carNumber" th:value="${hr.carNumber}"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">결혼</td>
+								<td><label><input type="radio" name="isMarried"
+										value="0" th:checked="${hr.IsMarried}?false:true">미혼</label> 
+										<label><input type="radio"
+										name="isMarried" value="1"
+										th:checked="${hr.IsMarried}?true:false"> 기혼</label></td>
+								<td bgcolor="skyblue">결혼기념일</td>
+								<td><input type="date" name="married" th:value="${hr.married}"></td>
+							</tr>
+							<tr>
+								<td colspan="4" align="right">
+									<input type="submit" name="updatehr" value="수정">
+								</td>
+							</tr>
+						</table>
+						</form>
+					</div>
+
+					<div id="school" class="tabcontent"><!-- 학력사항 -->
+					<table border=1 id="edutable" width="90%">
+						<thead>
+							<tr>
+								<th bgcolor="skyblue" width="5%"></th>
+								<th bgcolor="skyblue" width="5%"></th>
+								<th bgcolor="skyblue" width="15%">학교명</th>
+								<th bgcolor="skyblue" width="15%">전공</th>
+								<th bgcolor="skyblue" width="15%">학위</th>
+								<th bgcolor="skyblue" width="15%">입학년월</th>
+								<th bgcolor="skyblue" width="15%">졸업년월</th>
+								<th bgcolor="skyblue" width="15%">소재지</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr th:each="edu : ${hr.getEdus()}" th:id="row_edu+${edu.id}" class="edus">
+							<!-- <td bgcolor="skyblue" th:text="${eduStat.count}"> -->
+							<td bgcolor="skyblue">
+							</td>
+							<td>
+							<input type="hidden" name="id" th:value="${edu.id}">
+							<button th:id="update_edu+${edu.id}" name="update" th:attr="onclick=|clickupdate_edu(${edu.id});|" value="off">
+								<img src="/static/img/글 쓰기.png" width="20px" height="20px"/>
+							</button>
+							<button th:id="delete_edu+${edu.id}" name="delete" th:attr="onclick=|clickdelete_edu(${edu.id});|" >
+								<img src="/static/img/삭제.png" width="20px" height="20px"/>
+							</button>
+							</td>
+							<td th:id="school_edu+${edu.id}" name="schoolname" th:text="${edu.schoolname}">
+							<td th:id="major_edu+${edu.id}" th:text="${edu.major}"></td>
+							<td th:id="degree_edu+${edu.id}" th:text=${edu.degree}></td>
+							<td><input class="enterdate" type="date" th:id="enter_edu+${edu.id}" name="enterdate" th:value="${edu.enterdate}" readonly/></td>
+							<td><input class="graduatedate" type="date" th:id="exit_edu+${edu.id}" name="graduatedate" th:value="${edu.graduatedate}" readonly/></td>
+							<td th:id="addr_edu+${edu.id}" name="addr" th:text="${edu.addr}"></td>
+						</tr>
+						<tr id='rowinsert_edu'>
+							<td bgcolor="skyblue"></td>
+							<td>
+							<!-- <input type="hidden" name="id" th:value="${nextnum_edu}"> -->
+								<button id="insert" name="insert" th:attr="onclick=|clickinsert_edu(${nextnum_edu})|">
+								<img src="/static/img/write.PNG" width="20px" height="20px"/>
+							</button>
+							</td>
+							<td><input type='text' name='schoolname' id='schoolinsert' class='insert' width=25px/></td>
+							<td><input type='text' name='major' id='majorinsert' class='insert'/></td>
+							<td><input type='text' name='degree' id='degreeinsert' class='insert'/></td>
+							<td><input type='date' name='enterdate' id='enterdateinsert' class='insert'/></td>
+							<td><input type='date' name='graduatedate' id='graduatedateinsert' class='insert'/></td>
+							<td><input type='text' name='addr' id='addrinsert' class='insert'/></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				
+			<div id="career" class="tabcontent"><!-- 경력 -->
+			<table border=1 id="careertable" width="90%">
+							<thead>
+							<tr>
+								<th bgcolor="skyblue"></th>
+								<th bgcolor="skyblue"></th>
+								<th bgcolor="skyblue">회사명</th>
+								<th bgcolor="skyblue">직위</th>
+								<th bgcolor="skyblue">부서</th>
+								<th bgcolor="skyblue">담당업무</th>
+								<th bgcolor="skyblue">입사년월</th>
+								<th bgcolor="skyblue">퇴사년월</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="career : ${hr.getCareers()}" th:id="row_career+${career.id}" class="careers">
+							<!-- 	<td bgcolor="skyblue" th:text="${careerStat.count}"> -->
+								<td bgcolor="skyblue"> </td>
+								<td>
+								
+								<input type="hidden" name="id" th:value="${career.id}">
+								<button th:id="update_career+${career.id}" name="update" th:attr="onclick=|clickupdate_career(${career.id});|" value="off">
+									<img src="/static/img/글 쓰기.png" width="20px" height="20px"/>
+								</button>
+								<button th:id="delete_career+${career.id}" name="delete" th:attr="onclick=|clickdelete_career(${career.id});|" >
+									<img src="/static/img/삭제.png" width="20px" height="20px"/>
+								</button>
+								</td>
+								<td th:id="companyName_career+${career.id}" name="companyName" th:text="${career.companyName}">
+								 </td>
+								<td th:id="careerRank_career+${career.id}" th:text="${career.careerRank}"></td>
+								<td th:id="careerDept_career+${career.id}" th:text=${career.careerDept}></td>
+								<td th:id="work_career+${career.id}" th:text=${career.work}></td>
+								<td><input class="enteredDate" type="date" th:id="enteredDate_career+${career.id}" name="enteredDate" th:value="${career.enteredDate}" readonly/></td>
+								<td><input class="exitedDate" type="date" th:id="exitedDate_career+${career.id}" name="exitedDate" th:value="${career.exitedDate}" readonly/></td>
+							</tr>
+							<tr id='rowinsert_career'>
+								<td bgcolor="skyblue"></td>
+								<td>
+								<!-- <input type="hidden" name="id" th:value="${nextnum_career}"> -->
+									<button id="insert" name="insert" th:attr="onclick=|clickinsert_career(${nextnum_career})|">
+									<img src="/static/img/write.PNG" width="20px" height="20px"/>
+								</button>
+								</td>
+								<td><input type='text' name='companyName' id='companyNameinsert' class='insert'/></td>
+								<td><input type='text' name='careerRank' id='careerRankinsert' class='insert'/></td>
+								<td><input type='text' name='careerDept' id='careerDeptinsert' class='insert'/></td>
+								<td><input type='text' name='work' id='workinsert' class='insert'/></td>
+								<td><input type='date' name='enteredDate' id='enteredDateinsert' class='insert'/></td>
+								<td><input type='date' name='exitedDate' id='exitedDateinsert' class='insert'/></td>
+							</tr>
+							</tbody>
+						</table>
+					
+					</div>
+					<div id="qualified" class="tabcontent"><!-- 자격 먼허 -->
+					<table border=1 id="qualifiedtable" width="90%">
+							<thead>
+							<tr>
+								<th bgcolor="skyblue"></th>
+								<th bgcolor="skyblue"></th>
+								<th bgcolor="skyblue">자격/면허명</th>
+								<th bgcolor="skyblue">자격/면허증번호</th>
+								<th bgcolor="skyblue">발행기관</th>
+								<th bgcolor="skyblue">취득년월</th>
+								<th bgcolor="skyblue">만기년월</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="qualified : ${hr.getQualifieds()}" th:id="row_qualified+${qualified.id}" class="qualifieds">
+								<!-- <td bgcolor="skyblue" th:text="${qualifiedStat.count}"> -->
+								<td bgcolor="skyblue"></td>
+								<td>
+								
+								<input type="hidden" name="id" th:value="${qualified.id}">
+								<button th:id="update_qualified+${qualified.id}" name="update" th:attr="onclick=|clickupdate_qualified(${qualified.id});|" value="off">
+									<img src="/static/img/글 쓰기.png" width="20px" height="20px"/>
+								</button>
+								<button th:id="delete_qualified+${qualified.id}" name="delete" th:attr="onclick=|clickdelete_qualified(${qualified.id});|" >
+									<img src="/static/img/삭제.png" width="20px" height="20px"/>
+								</button>
+								</td>
+								<td th:id="qualifiedName_qualified+${qualified.id}" th:text="${qualified.qualifiedName}"></td>
+								<td th:id="qualifiedNumber_qualified+${qualified.id}" th:text=${qualified.qualifiedNumber}></td>
+								<td th:id="institution_qualified+${qualified.id}" th:text=${qualified.institution}></td>
+								<td><input class="acquiDate" type="date" th:id="enteredDate_qualified+${qualified.id}" name="acquiDate" th:value="${qualified.acquiDate}" readonly/></td>
+								<td><input class="expiredDate" type="date" th:id="expiredDate_qualified+${qualified.id}" name="expiredDate" th:value="${qualified.expiredDate}" readonly/></td>
+							</tr>
+							<tr id='rowinsert_qualified'>
+								<td bgcolor="skyblue"></td>
+								<td>
+								<input type="hidden" name="id" th:value="${nextnum_qualified}">
+									<button id="insert" name="insert" th:attr="onclick=|clickinsert_qualified(${nextnum_qualified})|">
+									<img src="/static/img/write.PNG" width="20px" height="20px"/>
+								</button>
+								</td>
+								<td><input type='text' name='qualifiedName' id='qualifiedNameinsert' class='insert'/></td>
+								<td><input type='text' name='qualifiedNumber' id='qualifiedNumberinsert' class='insert'/></td>
+								<td><input type='text' name='institution' id='institutioninsert' class='insert'/></td>
+								<td><input type='date' name='acquiDate' id='acquiDateinsert' class='insert'/></td>
+								<td><input type='date' name='expiredDate' id='expiredDateinsert' class='insert'/></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- 탭 구현 자바스크립트 -->
+					<script>
+						function openCity(evt, cityName) {
+							var i, tabcontent, tablinks;
+							tabcontent = document
+									.getElementsByClassName("tabcontent");
+							for (i = 0; i < tabcontent.length; i++) {
+								tabcontent[i].style.display = "none";
+							}
+							tablinks = document
+									.getElementsByClassName("tablinks");
+							for (i = 0; i < tablinks.length; i++) {
+								tablinks[i].className = tablinks[i].className
+										.replace(" active", "");
+							}
+							document.getElementById(cityName).style.display = "block";
+							evt.currentTarget.className += " active";
+						}
+						
+						$(document).ready(function(){
+							openCity(event, 'person');
+							$("#persontab").addClass("active");
+							
+						}
+						);
+					</script>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

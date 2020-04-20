@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	
+</script>
+<style>
+table{
+	border: 1px solid #444444;
+    border-collapse: collapse;
+}
+#test {
+	width: 100%;
+	heigth: 100px;
+	background-color: skyblue;
+}
+
+#test2 {
+	width: 100%;
+	height: 100px;
+	background-color: red;
+}
+
+#listname {
+	width: 100%;
+	/* height: 10%; */
+	background-color: gray;
+}
+#area{
+	width: 100%;
+	height: 100%;
+	background-color:green;
+}
+/* #wrapper{
+	border: 1px solid #444444;
+    border-collapse: collapse;
+} */
+
+</style>
+</head>
+<body>
+	<table border=1 width="100%">
+		<tr>
+			<td bgcolor="aquablue" width="12.5%">Sitename</td>
+			<td width="12.5%"></td>
+			<td bgcolor="aquablue" width="12.5%">writer</td>
+			<td width="12.5%"></td>
+			<td bgcolor="aquablue" width="12.5%">Date</td>
+			<td width="12.5%"></td>
+			<td bgcolor="aquablue" width="12.5%">Version</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td width="12.5%" bgcolor="aquablue">Step ID</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="aquablue">Scene</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="aquablue">Part</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="aquablue">Page</td>
+			<td width="12.5%"></td>
+		</tr>
+	</table>
+	<table border="1" width="100%" id="wrapper">
+		<tr>
+			<td id="menu" style="border-bottom:hidden;">
+				<div id="test">
+					<table border="1">
+						<tr>
+							<td width="30%">Menu</td>
+							<td width="20%">회원관리</td>
+							<td width="20%">인사</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="contents" height="1000px">
+				<div id="area" align="center">
+				<br>
+				<br>
+					<h2>XXXXXX</h2>
+					<hr>
+					<table border="1">
+						<tr>
+							<td>1</td><td>2</td>
+						</tr>
+					</table>
+				<br>
+				<br>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<!-- 	<table border="1" width="100%">
+		<tr>
+			<td>
+				<div id="test">
+					<table border="1">
+						<tr>
+							<td>Menu</td>
+							<td>회원관리</td>
+							<td>인사</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr>
+						<td>회원 관리</td>
+		</tr>
+		<tr>
+			<td colspan="9">
+				<div id="listname" width="100%">
+					
+					<table width="100%" border="1">
+						<tr>
+							<td width="20%">회원조회</td>
+								<td width="70%" ailgn="left" colspan="8"><select name="selectColumn">
+										<option value="selectColumn">조회 컬럼 선택</option>
+										<option value="username">아이디</option>
+										<option value="name">이름</option>
+										<option value="email">이메일</option>
+										<option value="tel">연락처</option>
+								</select> <input name="searchKeyword" type="text" /> 
+								<input name="submit" type="submit" value="조회" /></td>
+								<td></td>
+						</tr>
+					</table>
+					<table width="100%" border="1">
+						<tr>
+							<td colspan="9">회원정보 리스트</td>
+						</tr>
+					</table>
+					<table width="100%" border="1">
+						<tr>
+							<td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table> -->
+
+	<!-- 	<table border=1 width="100%">
+		<tr>
+			<td bgcolor="aquablue" width="12.5%">Sitename</td>
+			<td width="12.5%"></td>
+			<td bgcolor="aquablue" width="12.5%">writer</td>
+			<td width="12.5%"></td>
+			<td bgcolor="aquablue" width="12.5%">Date</td>
+			<td width="12.5%"></td>
+			<td bgcolor="aquablue" width="12.5%">Version</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td width="12.5%" bgcolor="aquablue">Step ID</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="aquablue">Scene</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="aquablue">Part</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="aquablue">Page</td>
+			<td width="12.5%"></td>
+		</tr>
+	</table>
+	<table border="1" width="100%">
+		<tr>
+			<td>
+				<div id="test">
+					<table border="1">
+						<tr>
+							<td>Menu</td>
+							<td>회원관리</td>
+							<td>인사</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="9">
+				<div id="listname" width="100%">
+					<table>
+						<tr>
+							<td>1</td><td>2</td>
+						</tr>
+						
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table> -->
+</body>
+</html>

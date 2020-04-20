@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/static/css/common.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#checkall").click(function() {
+			if ($("#checkall").is(":checked")) {
+				$(".check").prop("checked", true);
+			} else {
+				$(".check").prop("checked", false);
+			}
+		});
+		$(".check").click(function() {
+			if ($("input[name='check']:checked").length == cntCnkbox()) {
+				$("#checkall").prop("checked", true);
+			} else {
+				$("#checkall").prop("checked", false);
+			}
+		});
+
+	});
+	function cntCnkbox() {
+		var checkTotal = $("input[name='check']").not('#checkall').length;
+		console.log(checkTotal);
+		return checkTotal;
+	}
+</script>
+<style>
+
+</style>
+</head>
+<body>
+	<table th:insert="thymeleaf/user/head::#head">
+	</table>
+	<table border="1" width="100%" id="wrapper">
+		<tr>
+			<td id="menu" style="border-bottom: hidden;">
+				<div id="test" th:insert="thymeleaf/user/menutable::#menutable">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="contents" height="700px">
+				<div id="area" align="center">
+					&nbsp;
+					<h3 align="left">인사 관리</h3>
+					<hr>
+					<form method="get" th:action="@{/hr/searchHr}">
+						<table border="1" width="100%">
+							<tr>
+								<td bgcolor="skyblue" width="20%">회원조회</td>
+								<td width="80%" ailgn="left" colspan="8"><select
+									name="selectColumn">
+										<option value="selectColumn">조회 컬럼 선택</option>
+										<option value="username" th:selected="${selectColumn} eq username?true:false">아이디</option>
+										<option value="name" th:selected="${selectColumn} eq name?true:false">이름</option>
+										<option value="juminid" th:selected="${selectColumn} eq juminid?true:false">주민등록번호</option>
+										<option value="empid" th:selected="${selectColumn} eq empid?true:false">사원번호</option>
+								</select> <input name="searchKeyword" type="text" th:value="${searchKeyword}"/> 
+								<input name="submit" type="submit" value="조회" /></td>
+							</tr>
+						</table>
+					</form>
+					인사 정보 관리
+					<form th:action="@{/hr/deletelist}" th:method="post">
+					<table border="1" width="100%">
+						<tr bgcolor="skyblue">
+							<td><input type="checkbox" class="check" id="checkall"
+								name="checkall" value="selectAll">전체선택</td>
+							<td>순서번호</td>
+							<td>사번</td>
+							<td>이름</td>
+							<td>주민등록번호</td>
+							<td>부서</td>
+							<td>직위</td>
+							<td>입사일자</td>
+							<td>아이디</td>
+							<td>이메일</td>
+							<td>상세</td>
+						</tr>
+						<tr th:each="hr : ${hrList}">
+							<td bgcolor="skyblue"><input type="checkbox" class="check" id="check"
+								name="check" th:value="${hr.id}"></td>
+							<td th:text="${hrStat.count}"></td>
+							<td th:text="${hr.empId}"></td>
+							<td th:text="${hr.getUserItem().name}"></td>
+							<td th:text="${hr.juminId}"></td>
+							<td th:text="${hr.hrDept}"></td>
+							<td th:text="${hr.rank_name}"></td>
+							<td th:text="${hr.entered}"></td>
+							<td th:text="${hr.getUserItem().username}"></td>
+							<td th:text="${hr.getUserItem().email}"></td>
+						<!-- 	<td th:text="${hr.getGender()}?'남':'여'"></td> -->
+							<td><a th:href="@{/hr/getHr(id=${hr.id})}">상세</a>
+						</tr>
+						<tr>
+							<td colspan="3" style="border-right:hidden;">
+							
+							<input type="button" value="회원등록"
+								OnClick="location.href='/hr/insertHr'">
+									<input type="submit" value="선택삭제" />
+							</td>
+							<td colspan="8" align="right">
+								<div class="pagination" th:with="start=${T(Math).floor(hrList.number/5)*5 + 1},
+                    				last=(${start + 4 < hrList.totalPages ? start + 4 : hrList.totalPages})">
+									<a th:href="@{/user/gethrList(page=1)}">first</a>
+									<a th:class="${hrList.first} ? 'disabled'" 
+									th:href="${start<6} ? '#' : @{/user/gethrList(page=${(hrList.number/5)*5 - 4})}">&laquo;</a> 
+									<a th:href="${hrList.first} ? '#' :@{/hr/gethrList(page=${hrList.number})}"
+									aria-label="Previous">&lt;</a>
+									<th:block th:if="${last>0}">
+										<a th:each="page: ${#numbers.sequence(start, last)}"
+										th:class="${page == hrList.number + 1} ? 'active'"
+										th:text="${page>0?page:1}" th:href="@{/hr/gethrList(page=${page})}"></a>
+										</th:block>
+									<a th:class="${hrList.last} ? 'disabled'" 
+										th:href="${hrList.last} ? '#' : @{/hr/gethrList(page=${hrList.number + 2})}"
+										aria-label="Next"> <span aria-hidden="true">&gt;</span>
+										</a>
+										<a th:class="${hrList.last} ? 'disabled'" 
+										th:href="${hrList.last} ? '#' : @{/hr/gethrList(page=${(hrList.number/5)*5 + 6})}"
+										>
+										&raquo;</a>
+										<a th:href="@{/user/gethrList(page=${hrList.totalPages})}"
+											aria-label="Last"> <span aria-hidden="true">Last</span>
+										</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+					</form>
+				</div>
+			</td>
+		</tr>
+	</table>
+		<!-- 		
+    th:with는 해당 태그를 scope로 갖는 변수를 선언할 수 있게 해주는 속성이다.
+start=${T(Math).floor(hrList.number/10)*10 + 1} : 현제 페이지를 통해 현재 페이지 그룹의 시작 페이지를 구하는 로직이다.
+last=(${start + 9 < hrList.totalPages ? start + 9 : hrList.totalPages}) : 전체 페이지 수와 현재 페이지 
+그룹의 시작 페이지를 통해 현재 페이지 그룹의 마지막 페이지를 구하는 로직이다. -->
+</body>
+</html>

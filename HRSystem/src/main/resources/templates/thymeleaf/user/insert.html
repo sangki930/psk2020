@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/static/css/common.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#checkall").click(function() {
+			if ($("#checkall").is(":checked")) {
+				$(".check").prop("checked", true);
+			} else {
+				$(".check").prop("checked", false);
+			}
+		});
+		$(".check").click(function() {
+			if ($("input[name='check']:checked").length == cntCnkbox()) {
+				$("#checkall").prop("checked", true);
+			} else {
+				$("#checkall").prop("checked", false);
+			}
+		});
+
+	});
+	function cntCnkbox() {
+		var checkTotal = $("input[name='check']").not('#checkall').length;
+		console.log(checkTotal);
+		return checkTotal;
+	}
+</script>
+<style>
+
+</style>
+</head>
+<body>
+	<table border=1 width="100%">
+		<tr>
+			<td bgcolor="skyblue" width="12.5%">Sitename</td>
+			<td width="12.5%"></td>
+			<td bgcolor="skyblue" width="12.5%">writer</td>
+			<td width="12.5%"></td>
+			<td bgcolor="skyblue" width="12.5%">Date</td>
+			<td width="12.5%"></td>
+			<td bgcolor="skyblue" width="12.5%">Version</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td width="12.5%" bgcolor="skyblue">Step ID</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="skyblue">Scene</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="skyblue">Part</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="skyblue">Page</td>
+			<td width="12.5%"></td>
+		</tr>
+	</table>
+	<table border="1" width="100%" id="wrapper">
+		<tr>
+			<td id="menu" style="border-bottom: hidden;">
+				<div id="test" th:insert="thymeleaf/user/menutable::#menutable">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="contents" height="700px">
+				<div id="area" align="center">
+					&nbsp;
+					<h3 align="left">회원 추가</h3>
+					<br> <br>
+					<form th:action="@{/user/insertUser}" method="post">
+						<table th:align="center" th:border="1" th:cellpadding="0" width="50%">
+							<tr>
+								<td bgcolor="skyblue">아이디</td>
+								<td><input name="username" type="text" size="20" width="50"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">이메일</td>
+								<td><input name="email" type="text" size="20" width="50"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">비밀번호</td>
+								<td><input name="password" type="password" size="20"
+									width="50"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">이름</td>
+								<td><input name="name" type="text" size="20" width="50"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">연락처</td>
+								<td><input name="tel" type="text" size="20" width="50"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">생년월일</td>
+								<td><input name="birth" type="date" size="20" width="50"
+									></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">성별</td>
+								<td><label><input type="radio" name="gender"
+										value="1"> 남자</label> <label><input type="radio"
+										name="gender" value="0"> 여자</label>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue" align="center" colspan="2">
+								<input type="submit" value="회원 등록">
+								<input type="button" value="목록" th:attr="onclick=|location.href='@{/user/getuserItemList}'|">
+								</td>
+							</tr>
+						</table>
+					</form>
+					
+				</div>
+			</td>
+		</tr>
+	</table>
+		<!-- 		
+    th:with는 해당 태그를 scope로 갖는 변수를 선언할 수 있게 해주는 속성이다.
+start=${T(Math).floor(userItemList.number/10)*10 + 1} : 현제 페이지를 통해 현재 페이지 그룹의 시작 페이지를 구하는 로직이다.
+last=(${start + 9 < userItemList.totalPages ? start + 9 : userItemList.totalPages}) : 전체 페이지 수와 현재 페이지 
+그룹의 시작 페이지를 통해 현재 페이지 그룹의 마지막 페이지를 구하는 로직이다. -->
+</body>
+</html>
+
