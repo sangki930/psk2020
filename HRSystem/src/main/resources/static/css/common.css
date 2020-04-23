@@ -45,7 +45,7 @@ table {
 }
 
 .pagination a.active {
-	background-color: #4CAF50;
+	background-color: skyblue;
 	color: white;
 }
 
@@ -77,12 +77,12 @@ table {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-	background-color: #ddd;
+	background-color: rgb(128, 255, 255);
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-	background-color: #ccc;
+	background-color: skyblue;
 }
 
 /* Style the tab content */

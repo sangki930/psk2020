@@ -96,4 +96,16 @@ public class UserItemServiceImpl implements UserItemService{
 		return null;
 	}
 
+	@Override
+	public boolean checkUsername(String name) {
+		// TODO Auto-generated method stub
+		UserItem u = userItemRepository.findByUsername(name);
+		
+		if(u!=null) {
+			return true;//중복 임
+		}
+		
+		return false;//중복 아님
+	}
+
 }

@@ -41,7 +41,7 @@ public class UserItem {
 	private Long userId;
 	@Column(unique=true)
 	private String username;//아이디
-	@Column
+	@Column(length=20)
 	private String password;//비밀번호
 	
 	@Column

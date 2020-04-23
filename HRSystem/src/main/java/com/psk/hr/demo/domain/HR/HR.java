@@ -73,10 +73,10 @@ public class HR {
 	private LocalDate exited;
 	//퇴사일
 	
-	@Column(nullable=false,length=128)
+	@Column(length=12)
 	@Enumerated(EnumType.STRING)
-	@Builder.Default
-	private HRDept hrDept=HRDept.개발팀;
+//	@Builder.Default
+	private HRDept hrDept;
 	
 	//@Column(nullable=true, length=128)
 	@Column(length=12)

@@ -19,7 +19,7 @@ public interface UserItemService {
 	Page<UserItem> getUserItemList(Pageable pageable,Specification<UserItem> spec);//회원리스트 페이징
 	Page<UserItem> getUserItemList(Pageable pageable);
 	
-	
+	boolean checkUsername(String name);
 	
 	void deleteUserByChecked(List<UserItem> userItemlist);
 	

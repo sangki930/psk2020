@@ -16,8 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.psk.hr.demo.domain.account.UserItem;
@@ -64,7 +66,7 @@ public class UserItemController {
 	}
 
 	// 실제 삽입
-	@PostMapping("/insertUser")
+	@PostMapping("/insertUser_1")
 	@Transactional
 	public String insertUser(@ModelAttribute UserItem userItem) {
 
@@ -164,5 +166,19 @@ public class UserItemController {
 	@RequestMapping("/getTest")
 	public String testt() {
 		return folder_name+"/getTest";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/idcheck")
+	public short idcheck(@RequestBody String username) {
+		
+	System.out.println("idcheck확인");
+		
+		//UserItem compare = userItemService.get
+		if(userItemService.checkUsername(username)) {
+			return 1;//중복
+		}
+		
+		return 0;//중복아님
 	}
 }

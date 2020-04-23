@@ -15,6 +15,8 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long>, JpaSp
 
 	List<UserItem> findAll(Specification<UserItem> search);
 	
+	UserItem findByUsername(String name);
+	
 
 //	Page<UserItem> getUserList(Pageable pageable);
 }
