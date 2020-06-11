@@ -55,7 +55,7 @@ public class HR {
 	
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
-	private Long empId;
+	private String empId;
 	//사원번호
 	
 	/* @Column(nullable=false, length=128) */

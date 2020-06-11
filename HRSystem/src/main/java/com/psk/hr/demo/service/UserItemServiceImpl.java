@@ -1,5 +1,7 @@
 package com.psk.hr.demo.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +29,17 @@ public class UserItemServiceImpl implements UserItemService{
 	public void insertUser(UserItem userItem) {
 		// TODO Auto-generated method stub
 		userItemRepository.save(userItem);
+		Long cnt = userItemRepository.count();
+//		Long i = userItemRepository.findCountById
+		
+		LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMHHmmss"));
+		/*사원번호 부여 방식 : 시간 + 총 인원수*/
+		String empId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMHHmmss"))+cnt;
 		HR hr = HR.builder()
 				.userItem(userItem)
+				.empId(empId)
 				.build();
+		
 		hRRepository.save(hr);
 		
 	}

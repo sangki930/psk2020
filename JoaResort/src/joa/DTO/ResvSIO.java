@@ -12,6 +12,9 @@ public class ResvSIO {
 	String in_name;//입금자명
 	String comment;//남기실 말
 	LocalDate write_date;//예약한 날짜
+	int processing;//진행 상태
+	//진행상태 1: 예약완료 2: 입금완료(예약확정) 3:환불요청
+	//진행상태 4: 예약불가
 	public ResvSIO(String name, LocalDate resv_date, int room, String addr, String telnum, String in_name,
 			String comment, LocalDate write_date, int processing) {
 		super();
@@ -26,9 +29,7 @@ public class ResvSIO {
 		this.processing = processing;
 	}
 
-	int processing;//진행 상태
-	//진행상태 1: 예약완료 2: 입금완료(예약확정) 3:환불요청
-	//진행상태 4: 예약불가
+	
 	
 	public int getProcessing() {
 		return processing;

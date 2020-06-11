@@ -23,12 +23,14 @@ public class SecurityController {
 //    	return "thymeleaf/logout";
 //    }
     @GetMapping("/system/logout")
-    public void logout() {
+    public String logout() {
+    	return "thymeleaf/system/login";
     }
     @GetMapping("/admin/adminPage")
     public String admin() {
     	return "thymeleaf/admin/adminPage";
     }
+   
     
     
 }

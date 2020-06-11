@@ -7,66 +7,200 @@
 <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 	<script>
-function checkid(){
-	var data={
-			username : $("#username").val()
-		};
-		alert('check 확인');
-		$.ajax({
-			type: "POST",
-			url: "/user/idcheck",
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			data: JSON.stringify(data),
-			success : function(value){
-				
-				if(data===""){
-					alert('아이디를 입력하세요!');
-				}
-				else if(value == 1 ){
-					alert('해당아이디가 존재합니다.');
-					$("#submit").attr("disabled","disabled");
-				}else{
-					alert('사용가능한 아이디입니다.');
-					$("#submit").removeAttr("disabled");
-				}
-		}
-		});
-}
-/*영문, 숫자, 특수문자 혼합*/
-function chkPW(){
-
-	console.log('이벤트 발동');
-
-	var pw = $("#password").val();
-	console.log(pw);
-	console.log(pw.search(/[0-9]/g));
-	var num = pw.search(/[0-9]/g);
-	var eng = pw.search(/[a-z]/ig);
-	var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-
-	if(pw.length < 8 || pw.length > 20){
-
-	    $("#password_check").show();
-	    $("#password_check").text("8자리 ~ 20자리 이내로 입력해주세요.");
-	 return false;
-	}else if(pw.search(/\s/) != -1){
-	 alert("비밀번호는 공백 없이 입력해주세요.");
-	 return false;
-	}else if(num < 0 || eng < 0 || spe < 0 ){
-	 alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
-	 return false;
-	}else {
-	   console.log("통과"); 
-	   return true;
+function enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk){	
+	if(isUsernameOk && isPasswordOk && isNameOk && isBirthOk && $("input[name=gender]:checked").val()
+			&& isEmailOk && isTelOk){
+		
+		$("#submit").removeAttr("disabled");
+		return true;
+	}else{
+		$("#submit").attr("disabled","disabled");
+		return false;
 	}
-
 }
+$(function(){
+	var username = $("#username").val();
+	var password = $("#password").val();
+	var name = $("name").val();
+	
+	var isUsernameOk = false;
+	var isPasswordOk = false;
+	var isNameOk = false;
+	var isEmailOk = false;
+	var isTelOk = false;
+	var isBirthOk = false;
+	
+	/*계정 형식 체크(영소문자합쳐서 6자 이상)*/
+	$("#username").keyup(function(){
+		let inputTxt = $("#username").val();
+        let chkOnlyEngNum = /^[a-zA-Z0-9_-]{6,15}$/;
+        
+        /*올바른 형식이면*/
+        if(chkOnlyEngNum.test(inputTxt) || (inputTxt.length>5)){
+        	$("#username_check").css("color","green");
+        	$("#username_check").html("올바른 형식입니다.");
+        	isUsernameOk=true;
+        	
+        	enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+        	
+        }else{
+        	$("#username_check").css("color","red");
+        	$("#username_check").html("올바르지 않음");
+        	isUsernameOk=false;
+        	
+        	enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+        }
+	});
+	
+	/*계정 중복 체크*/
+	$("#idcheck").click(function(){
+		var data={
+				username : $("#username").val()
+			};
+			/* alert('check 확인'); */
+			$.ajax({
+				type: "POST",
+				url: "/user/idcheck",
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				data: JSON.stringify(data),
+				success : function(value){
+					
+					if(!$("#username").val()){
+						alert('아이디를 입력하세요!');
+					}
+					else if(value == 1 ){
+						alert('해당아이디가 존재합니다.');
+						/* $("#submit").attr("disabled","disabled"); */
+					}else{
+						alert('사용가능한 아이디입니다.');
+						/* $("#submit").removeAttr("disabled"); */
+					}
+			}
+			});
+	});
+	
+	/*비밀번호 체크*/
+	$("#password").keyup(
+			function(){
+
+				/* console.log('이벤트 발동'); */
+
+				var pw = $("#password").val();
+				/* console.log(pw);
+				console.log(pw.search(/[0-9]/g)); */
+				var num = pw.search(/[0-9]/g);
+				var eng = pw.search(/[a-z]/ig);
+				var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+				if(pw.length < 8 || pw.length > 20){
+
+				    $("#password_check").show();
+				    $("#password_check").text("8자리 ~ 20자리 이내로 입력해주세요.");
+				 isPasswordOk = false;
+				}else if(pw.search(/\s/) != -1){
+				 alert("비밀번호는 공백 없이 입력해주세요.");
+				 isPasswordOk = false;
+				 
+				 enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+				}else if(num < 0 || eng < 0 || spe < 0 ){
+				 console.log("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+				 isPasswordOk = false;
+				 
+				 enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+				}else {
+				   console.log("통과");
+				   $("#password_check").html("올바른 형식");
+				   $("#password_check").css("color","green");
+				   isPasswordOk = true;
+				   enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+				}
+
+			}		
+	);
+	
+	/*이매일 체크*/
+	$("#email").keyup(
+			function(){
+		        var inputTxt = $("#email").val();
+		        var chkEmail = /^[a-zA-Z0-9]+@([a-zA-Z0-9]{1,10})\.([a-zA-Z]{1,10})+$/;
+		        if( chkEmail.test(inputTxt) ){
+		           $("#email_check").html("올바른 형식");
+		           $("#email_check").css("color","green");
+		           isEmailOk=true;
+		           enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+		        }else{
+		        	$("#email_check").html("이메일 형식과 맞지 않습니다.");
+		        	$("#email_check").css("color","red");
+		        	isEmailOk=false;
+		        	enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+		        }
+		    }
+	);
+	
+	/*연락처 체크*/
+	$("#tel").keyup(function(){
+		let inputTxt = $("#tel").val();
+		let chkTel = /^\d{2,3}-\d{3,4}-\d{4}$/;
+		if(chkTel.test(inputTxt)){
+			$("#tel_check").html("올바른 형식");
+			$("#tel_check").css("color","green");
+			
+			isTelOk = true;
+			enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+		}else{
+			$("#tel_check").html("형식이 올바르지 않습니다.");
+			$("#tel_check").css("color","red");
+			
+			isTelOk = false;
+			enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+		}
+	});
+	
+	/*이름 체크*/
+	$("#name").keyup(
+			function(){
+				var inputLen = $("#name").val().length;
+			    var chkBlank = /\s/g;
+			    var chkResult = chkBlank.test( $("#name").val() );
+			    
+			    //길이에 맞지 않거나 공백이 포함되어 있는 경우
+			    if((inputLen < 1 || inputLen > 20) || chkResult ){            
+			                  
+			       /* alert("공백을 포함할 수 없습니다!"); */
+			       $("#name_check").html("올바른 형식이 아닙니다!");
+			       isNameOk=false;
+			       
+			       enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+			    }else{            
+			       $("#name_check").html("올바른 입력");
+			      isNameOk=true;
+			      enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+			    }
+			}
+	);
+	
+	/*생일 체크*/
+	$("input[type=date]").change(function(){
+		/* alert("생일 체크");
+		console.log($("input[type=date]").val()); */
+		isBirthOk = true;
+		enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+	});
+	
+	/*성별 체크*/
+	$("input[name=gender]").click(function(){
+		alert("성별체크");
+		enablesubmit(isUsernameOk,isPasswordOk,isNameOk,isBirthOk,isEmailOk,isTelOk);
+	});
+	
+});
 </script>
 <style>
-#password_check{
+#password_check,#name_check,#email_check,#username_check,#email_check,#tel_check{
 	font-size : 8px;	
 }
+
 </style>
 </head>
 <body>
@@ -108,35 +242,41 @@ function chkPW(){
 					<form th:action="@{/user/insertUser_1}" method="post" autocomplete="off">
 						<table th:align="center" th:border="1" th:cellpadding="0" width="50%">
 							<tr>
-								<td bgcolor="skyblue">아이디</td>
+								<td bgcolor="skyblue" value="true">아이디</td>
 								<td><input id="username" name="username" type="text" size="20" width="50">
-									<button type="button" id="idcheck" onClick="checkid();">
+									<button type="button" id="idcheck">
 										중복체크
 									</button>
+									<p id="username_check"></p>
 								</td>
-							</tr>
-							<tr>
-								<td bgcolor="skyblue">이메일</td>
-								<td><input name="email" type="text" size="20" width="50"></td>
 							</tr>
 							<tr>
 								<td bgcolor="skyblue">비밀번호</td>
 								<td><input name="password" type="password" id="password" size="20"
-									width="50" onkeyup="chkPW();" placeholder="영문,숫자,특수문자 혼합">
+									width="50" placeholder="영문,숫자,특수문자 혼합">
 									<p id="password_check">8자리 ~ 20자리 이내로 입력해주세요.</p>
 									</td>
 							</tr>
 							<tr>
+								<td bgcolor="skyblue">이메일</td>
+								<td><input id="email" name="email" type="text" size="20" width="50"
+								placeholder="aaa@aaa.com과 같이 입력">
+								<p id="email_check">위 형식과 맞게 입력하세요</p></td>
+							</tr>
+							<tr>
 								<td bgcolor="skyblue">이름</td>
-								<td><input name="name" type="text" size="20" width="50"></td>
+								<td><input id="name" name="name" type="text" size="20" width="50">
+								<p id="name_check"></p></td>
 							</tr>
 							<tr>
 								<td bgcolor="skyblue">연락처</td>
-								<td><input name="tel" type="text" size="20" width="50"></td>
+								<td><input id="tel" name="tel" type="text" size="20" width="50"
+								placeholder="?-?-?">
+								<p id="tel_check">XXX-XXXX-XXXX 또는 XX-XXXX-XXXX으로 입력</p></td></td>
 							</tr>
 							<tr>
 								<td bgcolor="skyblue">생년월일</td>
-								<td><input name="birth" type="date" size="20" width="50"
+								<td><input id="birth" name="birth" type="date" size="20" width="50"
 									></td>
 							</tr>
 							<tr>
