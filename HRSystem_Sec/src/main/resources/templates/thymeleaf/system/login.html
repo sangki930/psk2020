@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Login</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800');
+        *{
+            font-family : 'Nanum Gothic';
+        }
+        body{
+            background-color: dodgerblue;
+        }
+        #loginform{
+            border-radius: 4px;
+            margin: 20% 20% 20% 20%;
+            justify-content: center;
+            width : 500px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            background-color: dodgerblue;
+            border: solid 4px white;
+        }
+        #loginform>div{
+            margin-top: 0;
+            margin-left: 12.5%;
+            margin-right: 12.5%;
+            background-color: #f1f1f1;
+            width: 75%;
+            text-align: center;
+            line-height: 75px;
+        }
+        #loginform>#id_form,#loginform>#password_form{
+            /* margin-top: 20%; */
+            font-size: 30px;
+            font-weight: bolder;
+            background-color: gray;
+            text-align: left;
+            
+        }
+        #username,#password{
+            border-radius: 4px;
+            width : 300px;
+            height : 30px;
+            font-size: 25px;
+        }
+        #text{
+            font-family : 'Nanum Gothic';
+            font-size: 10px;
+        }
+        #submit{
+            width:300px;
+            height: 50px;
+            font-weight: bolder;
+            background-color: dodgerblue;
+            border: solid 4px white;
+            border-radius: 4px;
+        }
+        #submit:hover{
+            background-color: lightblue;
+        }
+        #loginform>#login_info{
+            font-family : 'Nanum Gothic';
+            font-size: 30px;
+            color: white;
+            background-color: dodgerblue;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+<form method="post">
+    <div id="loginform">
+    
+        <div id="login_info">
+            인사관리 시스템 로그인
+        </div>
+        <div id="id_form">
+            아이디
+        </div>
+        <div>
+            <input type="text" id="username" name="username" />
+        </div>
+        <div id="password_form">
+            비밀번호
+        </div>
+        <div>
+            <input type="password" id="password" name="password" />
+        </div>
+        
+        <div>
+            <input type="submit" id="submit" value="로그인"/>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

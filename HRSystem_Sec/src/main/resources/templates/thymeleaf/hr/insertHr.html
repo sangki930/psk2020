@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head th:with="nextnum=${edus.get(#lists.size(edus)-1).getId()+1}, cnt=${#lists.size(edus)}, hrid=${hr.id}">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+/* <![CDATA[ */
+/* $(document).ready(function(){
+	
+	var flag = true;
+	
+	
+	$("#update").click(function(){
+		
+		if(flag==true){
+		console.log("입력가능모드로 전환");
+		$(id).children().removeAttr('readonly');
+		$()
+		flag=false;
+		}else{
+			console.log("입력불가모드로 전환");
+			$(id).children().attr('readonly',true);
+			flag=true;
+		}
+	});
+	
+}); */
+
+//댓글 삭제 
+function edudelete(cno){
+    $.ajax({
+        url : '/hr/deleteEdu/'+cno,
+        type : 'post',
+        success : function(data){
+            alert('삭제성공');
+        }
+    });
+}
+
+function eduupdate(data){
+	
+	  $.ajax({
+	        url : '/hr/updateEdu',
+	        type : 'post',
+	        data : data,
+	        success : function(data){
+	            alert('수정성공');
+	        }
+	    });
+}
+
+
+/* ]]> */
+</script>
+	<script th:inline="javascript">
+			/* <![CDATA[ */
+				
+		function clickupdate(id){
+					
+					var nextnum = /*[[ ${nextnum} ]]*/;
+					var cnt = /*[[ ${cnt} ]]*/;
+					var updateid = "#update"+id;
+					var deleteid="#delete"+id;
+					var schoolid = "#school"+id;
+					var degreeid = "#degree"+id;
+					var rowid = "#row"+id
+					var enterid = "#enter"+id;
+					var exitid="#exit"+id;
+					var majorid="#major"+id;
+					var addrid="#addr"+id;
+					var flag=true;
+					
+					var school=$(schoolid).text();
+					var major=$(majorid).text();
+					var degree=$(degreeid).text();
+					var addr=$(addrid).text();
+					
+					if($(updateid).val()=='off'){
+						
+						$(updateid).val('on');
+						flag=true;
+					}else{
+						$(updateid).val('off');
+						flag=false;
+					}
+					
+					
+				/*  $(updateid).click(function(){ */
+						
+						if(flag==true){
+						console.log("입력가능모드로 전환 :"+id);
+						/* $(schoolid).removeAttr('readonly'); */
+						$(enterid).removeAttr('readonly');
+						$(exitid).removeAttr('readonly');
+						/* $(addrid).removeAttr('readonly'); */
+						
+						$(schoolid).html("<input id='schoolinput"+id+"' type='text' name='schoolname' value='"+school+"' maxlength=5>");
+						/* a="<input type='text' name='major' value='"+major+"' maxlength=5>"; */
+						$(majorid).html("<input id='majorinput"+id+"' type='text' name='major' value='"+major+"' maxlength=5>");
+						$(degreeid).html("<input id='degreeinput"+id+"' type='text' name='degree' value='"+degree+"' maxlength=5>");
+						$(addrid).html("<input id='addrinput"+id+"' type='text' class='addr' name='addr' value='"+addr+"' maxlength=10>");
+						
+						flag=false;
+						
+						}else{
+							console.log("입력불가모드로 전환 :"+id);
+							/* alert($(rowid+' input[type=text]').serialize()); */
+							
+							updatedata = $(rowid+' input[type=text]').serialize()+"&" + $(rowid+' input[type=date]').serialize()
+							+"&" +$(rowid+' input[type=hidden]').serialize();
+							
+							alert(updatedata);
+							eduupdate(updatedata);
+							/* $(schoolid).attr('readonly',true); */
+							$(enterid).attr('readonly',true);
+							$(exitid).attr('readonly',true);
+							/* $(addrid).attr('readonly',true); */
+				
+							/* var insertData = $('[name=updateEduForm]').serialize(); */
+
+							
+							$(schoolid).html($("#schoolinput"+id).val());
+							$(majorid).html($("#majorinput"+id).val());
+							$(degreeid).html($("#degreeinput"+id).val());
+							$(addrid).html($("#addrinput"+id).val());
+							
+							
+							flag=true;
+							
+						}
+					 /* }); */ 
+			}
+				
+			
+			function clickdelete(id){
+				var flag=true;
+				var nextnum = /*[[ ${nextnum} ]]*/;
+				var cnt = /*[[ ${cnt} ]]*/;
+				var updateid = "#update"+id;
+				var deleteid="#delete"+id;
+				var schoolid = "#school"+id;
+				var degreeid = "#degree"+id;
+				var rowid = "#row"+id
+				var enterid = "#enter"+id;
+				var exitid="#exit"+id;
+				var majorid="#major"+id;
+				var addrid="#addr"+id;
+				
+				/* $(deleteid).click(function(){ */
+					
+					edudelete(id);
+					$(rowid).remove();
+				/* }); */
+			}
+			
+			function clickinsert(id){
+				var nextnum = id;
+				var cnt = /*[[ ${cnt} ]]*/;
+				
+				/* $(insert).click(function(){ */
+					
+					console.log('삽입')
+					rowid = "#row"+nextnum;
+					
+					var insertdata = $(rowid+' input[type=text]').serialize()+"&" + $(rowid+' input[type=date]').serialize()
+					+"&" +$(rowid+' input[type=hidden]').serialize()+"&" +"hrid="+/*[[ ${hrid} ]]*/;
+					
+					/* alert(insertdata); */
+					
+					$.ajax({
+				        url : '/hr/insertEdu',
+				        type : 'post',
+				        data : insertdata,
+				        success : function(insertdata){
+				        	
+				            alert('삽입성공');
+				            
+				         /*    $(rowid).remove(); */
+				            
+				            a="";
+				            a+="<tr id='row"+nextnum+"'>";
+				            a+="<td bgcolor='skyblue'>"+(cnt+1)+"</td>";
+				            a+="<td>";
+				            a+="<input type='hidden' name='id' value="+nextnum+">";
+				            a+="<button id='update"+nextnum+"' name='update' onclick=\"clickupdate("+nextnum+")\">";
+				            a+="<img src='/static/img/글 쓰기.png' width='20px' height='20px' />";
+				            a+="</button>";
+				            a+="<button id='delete"+nextnum+"' name='delete' onclick=\"clickdelete("+nextnum+")\">";
+				            a+="<img src='/static/img/삭제.png' width='20px' height='20px' />";
+				            a+="</button>";
+				            a+="</td>";
+				            a+="<td id='school"+nextnum+"' name='school'>"+$("#schoolinsert").val()+"</td>";
+				            a+="<td id='major"+nextnum+"'>"+$("#majorinsert").val()+"</td>";
+				            a+="<td id='degree"+nextnum+"'>"+$("#degreeinsert").val()+"</td>";
+				        	a+="<td><input class='enterdate' type='date' id='enter"+nextnum+"' name='enterdate' value='"+$("#enterdateinsert").val()+"' readonly/></td>";
+				        	a+="<td><input class='graduatedate' type='date' id='exit"+nextnum+"' name='graduatedate' value='"+$("#graduatedateinsert").val()+"' readonly/></td>";	
+				    		a+="<td id='addr"+nextnum+"' name='addr'>"+$("#addr").val()+"</td></tr>";
+				            
+		    			/*
+				            var b="";
+				            b+="<tr id='row"+nextnum+"'>";
+							b+="<td bgcolor='skyblue'></td>";
+							b+="<td>";
+							b+="<input type='hidden' name='id' value="+(nextnum+1)+">";
+							b+="<button id='insert' name='insert'>";
+							b+="<img src='/static/img/글 쓰기.png' width='20px' height='20px'/>";
+							b+="</button>";
+							b+="</td>";
+				            b+="<td><input type='text' name='school' id='schoolinsert' class=''/></td>";
+							b+="<td><input type='text' name='major' id='majorinsert' class=''/></td>";
+							b+="<td><input type='text' name='degree' id='degreeinsert' class=''/></td>";
+							b+="<td><input type='date' name='enterdate' id='enterdateinsert' class=''/></td>";
+							b+="<td><input type='date' name='graduatedate' id='graduatedateinsert' class=''/></td>";
+							b+="<td><input type='text' name='addr' id='addrinsert' class=''/></td></tr>";
+							
+							*/
+				         
+							$("#rowinsert").before(a);
+				        }
+				    }); 
+					
+				
+				
+			}
+
+				
+			
+				/* ]]> */
+</script>
+<style>
+#update{
+	width:35px;
+	height:35px;
+	/* background: url('/static/img/글 쓰기.png'); */
+}
+#delete{
+	width:35px;
+	height:35px;
+	/* background: url('/static/img/글 쓰기.png'); */
+}
+</style>
+</head>
+<body th:with="nextnum=${edus.get(#lists.size(edus)-1).getId()+1}, cnt=${#lists.size(edus)}, hrid=${hr.id}">
+<img src="/static/img/글 쓰기.png" width="20px" height="20px"/>
+	
+	
+			<!-- <form name="updateEduForm"> -->
+	<table border=1 id="edutable">
+		<thead>
+		<tr>
+			<th bgcolor="skyblue"></th>
+			<th bgcolor="skyblue"></th>
+			<th bgcolor="skyblue">학교명</th>
+			<th bgcolor="skyblue">전공</th>
+			<th bgcolor="skyblue">학위</th>
+			<th bgcolor="skyblue">입학년월</th>
+			<th bgcolor="skyblue">졸업년월</th>
+			<th bgcolor="skyblue">소재지</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="edu : ${edus}" th:id="row+${edu.id}">
+	
+			<td bgcolor="skyblue" th:text="${eduStat.count}"></td>
+			<td>
+			
+			<input type="hidden" name="id" th:value="${edu.id}">
+			<button th:id="update+${edu.id}" name="update" th:attr="onclick=|clickupdate(${edu.id});|" value="off">
+				<img src="/static/img/글 쓰기.png" width="20px" height="20px"/>
+			</button>
+			<button th:id="delete+${edu.id}" name="delete" th:attr="onclick=|clickdelete(${edu.id});|" >
+		<!-- 	th:attr="onclick=|pageMove('${nowPage}', '${pageSize}')|" -->
+				<img src="/static/img/삭제.png" width="20px" height="20px"/>
+			</button>
+			</td>
+			<td th:id="school+${edu.id}" name="schoolname" th:text="${edu.schoolname}">
+			<!-- <input class="school" th:id="school+${edu.id}" name="school" type="text" th:value="${edu.schoolname}" readonly/> --></td>
+			<td th:id="major+${edu.id}" th:text="${edu.major}"></td>
+			<td th:id="degree+${edu.id}" th:text=${edu.degree}></td>
+			<td><input class="enterdate" type="date" th:id="enter+${edu.id}" name="enterdate" th:value="${edu.enterdate}" readonly/></td>
+			<td><input class="graduatedate" type="date" th:id="exit+${edu.id}" name="graduatedate" th:value="${edu.graduatedate}" readonly/></td>
+			<td th:id="addr+${edu.id}" name="addr" th:text="${edu.addr}"></td>
+			<!-- </form> -->
+		</tr>
+		<tr id='rowinsert'>
+			<td bgcolor="skyblue" th:text="${nextnum}"></td>
+			<td>
+			<input type="hidden" name="id" th:value="${nextnum}">
+				<button id="insert" name="insert" th:attr="onclick=|clickinsert(${nextnum})|">
+				<img src="/static/img/글 쓰기.png" width="20px" height="20px"/>
+			</button>
+			</td>
+			<td><input type='text' name='schoolname' id='schoolinsert' class=''/></td>
+			<td><input type='text' name='major' id='majorinsert' class=''/></td>
+			<td><input type='text' name='degree' id='degreeinsert' class=''/></td>
+			<td><input type='date' name='enterdate' id='enterdateinsert' class=''/></td>
+			<td><input type='date' name='graduatedate' id='graduatedateinsert' class=''/></td>
+			<td><input type='text' name='addr' id='addrinsert' class=''/></td>
+		</tr>
+		</tbody>
+	</table>
+	
+</body>
+</html>
