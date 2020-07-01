@@ -2,7 +2,9 @@ package com.psk.JoaResort.DTO;
 
 import java.time.LocalDate;
 
+import lombok.Data;
 
+@Data
 public class Reservation {
 	
 	Long id;//예약번호

@@ -196,36 +196,13 @@ function eduupdate(data){
 				        	a+="<td><input class='enterdate' type='date' id='enter"+nextnum+"' name='enterdate' value='"+$("#enterdateinsert").val()+"' readonly/></td>";
 				        	a+="<td><input class='graduatedate' type='date' id='exit"+nextnum+"' name='graduatedate' value='"+$("#graduatedateinsert").val()+"' readonly/></td>";	
 				    		a+="<td id='addr"+nextnum+"' name='addr'>"+$("#addr").val()+"</td></tr>";
-				            
-		    			/*
-				            var b="";
-				            b+="<tr id='row"+nextnum+"'>";
-							b+="<td bgcolor='skyblue'></td>";
-							b+="<td>";
-							b+="<input type='hidden' name='id' value="+(nextnum+1)+">";
-							b+="<button id='insert' name='insert'>";
-							b+="<img src='/static/img/글 쓰기.png' width='20px' height='20px'/>";
-							b+="</button>";
-							b+="</td>";
-				            b+="<td><input type='text' name='school' id='schoolinsert' class=''/></td>";
-							b+="<td><input type='text' name='major' id='majorinsert' class=''/></td>";
-							b+="<td><input type='text' name='degree' id='degreeinsert' class=''/></td>";
-							b+="<td><input type='date' name='enterdate' id='enterdateinsert' class=''/></td>";
-							b+="<td><input type='date' name='graduatedate' id='graduatedateinsert' class=''/></td>";
-							b+="<td><input type='text' name='addr' id='addrinsert' class=''/></td></tr>";
-							
-							*/
-				         
+
 							$("#rowinsert").before(a);
 				        }
 				    }); 
-					
-				
-				
+
 			}
 
-				
-			
 				/* ]]> */
 </script>
 <style>
