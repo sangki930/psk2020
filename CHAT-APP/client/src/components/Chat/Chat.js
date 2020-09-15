@@ -60,7 +60,7 @@ const sendMessage = (event)=>{
         socket.emit('sendMessage',message,()=>setMessage(''));
     }
 }
-
+//메시지 시험 출력
 console.log(message,messages);
 
 return (
