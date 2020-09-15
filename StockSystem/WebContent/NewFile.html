@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+
+/* 파일 업로드 전에 이미지를 미리 보기하기 위한 함수 */
+function preview_image() {
+ if( document.memoneinfo.uploadfile.value == '' ){
+  alert("먼저 찾아보기 버튼을 누르고 파일을 선택하세요.");
+  return;
+ } 
+ if ( ! isImageFile( document.memoneinfo.uploadfile.value ) ) {
+  alert("이미지 파일(jpg, gif, bmp)만 업로드 가능합니다.");
+  return;
+ }
+ control_image();
+ document.getElementById('preview_img').src = "file:///" + document.memoneinfo.uploadfile.value.replace( /%/,"%25");
+}
+
+ 
+
+/* ??? */
+
+function control_image() {
+ var target_img = document.getElementById('preview_img');
+ var maxWidth = 88;
+ var maxHeight = 88;
+ 
+ newImg = new Image();
+ newImg.src = "file:///" + document.memoneinfo.uploadfile.value;
+ imgw = newImg.width;
+ imgh = newImg.height;
+ check_fileSize();
+}
+
+ 
+
+/* 이미지 파일인지 알아오는 함수 */
+
+function isImageFile( fileName ) {
+    var fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+    fileSuffix = fileSuffix.toLowerCase();
+    if ( "jpg" == fileSuffix || "jpeg" == fileSuffix  || "gif" == fileSuffix || "bmp" == fileSuffix || "png" == fileSuffix)
+        return true;
+    else
+        return false;
+}
+
+/* 업로드 전에 이미지파일의 크기(bytes)를 알아오는 함수 */
+var old_file='';
+function check_fileSize() {
+ var filename = document.memoneinfo.uploadfile.value;
+ var bytevalue = 0;
+ var target_img = document.getElementById('preview_img');
+ newImg = new Image();
+ newImg.onload = function(){  
+  bytevalue = this.fileSize;  
+  document.getElementById('limit').innerText = Math.round(bytevalue/1024);
+  fileSize = document.getElementById('limit').innerText;
+  if (fileSize > 400){
+   alert('파일크기는 400KB까지 업로드 가능합니다');
+  }
+ }
+ newImg.onerror = function(){
+  //alert('이미지 미리보기 실패!');
+ }
+ newImg.src = "file:///" + filename.replace( /%/,"%25");
+}
+
+
+</script>
+
+<img src="http://fimg.hanmail.net/tenth/img/h/c/y/a/14ous/210/405573-61612.gif" width="88" height="88" align="absmiddle" alt="" id="preview_img">
+
+ 
+
+      <input type="file" name="uploadfile" class="inp" style="" size="40">
+      <input type='button' value='미리보기' style=" height:18px;" onClick="preview_image()" class="inp">
+      <a href="javascript:clearImg();"><img src="http://cafeimg.hanmail.net/cf_img2/bbs/sbtn_initial.gif" width="41" height="18" align="absmiddle" alt="초기화"></a><br>
+      <div style="padding:5px 0 0 0" class="stext"><img src="http://cafeimg.hanmail.net/cf_img2/infoicon_new2.gif" width="10" height="10" border="0" align="texttop"> 최적 사이즈 <font class="text_acc_01">150*150</font>, 현재 용량&nbsp; <font class="text_acc_01"><span id="limit">0</span>KB / 최대 400KB</font></div>
+</body>
+</html>

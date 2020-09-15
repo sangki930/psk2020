@@ -1,0 +1,87 @@
+<script>
+	$(document).ready(function() {
+		var input_file;
+		var submitFlag = true;	// submit 踰꾪듉�씠 �겢由��릱�뒗吏� �긽�깭瑜� ���옣�븷 蹂��닔
+		$("#input_img").change(function(e) {	// id媛� #input_img�씤 �슂�냼�쓽 value媛� 蹂�寃쎈릺硫� �떎�쓬 �븿�닔瑜� �떎�뻾�븳�떎.
+			// change �씠踰ㅽ듃媛� 諛쒖깮�븳 �슂�냼�뿉�꽌 �뙆�씪 媛앹껜媛� �떞寃⑥엳�뒗 由ъ뒪�듃�씤 files瑜� 諛쏆븘�삩�떎.
+			var file = e.target.files;		
+			input_file = file[0];			// 0踰덉㎏ �뙆�씪媛앹껜瑜� input_file�뿉 ���옣�븳�떎.
+
+			var reader = new FileReader();	// �뙆�씪�쓣 �씫湲� �쐞�빐 FileReader() 媛앹껜瑜� �깮�꽦�븳�떎.
+			
+			reader.onload = function(e) {	// FileReader 媛앹껜媛� 濡쒕뵫�릺硫� �떎�쓬 �븿�닔瑜� �떎�뻾�븳�떎.
+	
+				if(input_file.type.match("image.*")) {		// �엯�젰�븳 �뙆�씪�씠 �씠誘몄� �뙆�씪�씪 寃쎌슦
+					$("#img").attr("src", e.target.result);	// id媛� img�씤 �슂�냼�쓽 src �냽�꽦媛믪쓣 �뙆�씪二쇱냼濡� 蹂�寃쏀븳�떎.
+				} else {		// �엯�젰�븳 �뙆�씪�씠 �씠誘몄� �뙆�씪�씠 �븘�땲硫� 
+					$("#img").attr("src", ""); // src �냽�꽦媛믪쓣 鍮덇컪�쑝濡� 留뚮뱾�뼱 �몴�떆�릺吏� �븡寃� �븳�떎.
+				}
+			}	
+			reader.readAsDataURL(input_file) // readAsDataURL() 硫붿냼�뱶瑜� �넻�빐 File �뜲�씠�꽣瑜� URL濡� 留뚮뱺�떎.
+		});
+
+		$("#img_form").submit(function(e) {	// img_form�뿉�꽌 submit �씠踰ㅽ듃媛� 諛쒖깮�븯硫� �떎�쓬 �븿�닔瑜� �떎�뻾�븳�떎.
+
+			if(submitFlag) {	//submitFlag媛� true硫� (理쒖큹 �겢由��떆)
+
+				if(!input_file.type.match("image.jp*") &&
+				   !input_file.type.match("image.gif") &&
+				   !input_file.type.match("image.png")) {	// �엯�젰�븳 �뙆�씪�씠 �씠誘몄� �뙆�씪�씠 �븘�땲硫�
+					alert("�뙆�씪 �뾽濡쒕뱶�뒗 jpg, png, gif �솗�옣�옄留� 媛��뒫�빀�땲�떎."); // �떎�쓬 硫붿떆吏�瑜� 異쒕젰�븯怨�
+					return false;									  // false瑜� 由ы꽩�븳�떎.
+				}
+				submitFlag = false;	// false濡� 諛붽씀怨�
+				return true;		// true瑜� 由ы꽩�븳�떎.
+			} else {				// false�씪 寃쎌슦
+				return submitFlag;	// false濡� 蹂�寃쎈맂 submitFlag瑜� 由ы꽩�븳�떎.
+			}	
+		});
+	});
+</script>
+
+
+
+
+    $('#image').on('change', function() {
+        
+        ext = $(this).val().split('.').pop().toLowerCase(); //확장자
+        //split : .을 기준으로 나눔,toLowerCase : 대문자를 소문자로 바꿈
+        
+        //배열에 추출한 확장자가 존재하는지 체크
+        if($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+            resetFormElement($(this)); //폼 초기화
+            window.alert('이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)');
+        } else {
+            file = $('#image').prop("files")[0];
+            blobURL = window.URL.createObjectURL(file);
+            $('#image_preview img').attr('src', blobURL);
+            $('#image_preview').slideDown(); //업로드한 이미지 미리보기 
+            $(this).slideUp(); //파일 양식 감춤
+        }
+    });
+
+    /*
+    onclick event handler for the delete button.
+    It removes the image, clears and unhides the file input field.
+    */
+    $('#image_preview a').bind('click', function() {
+        resetFormElement($('#image')); //전달한 양식 초기화
+        $('#image').slideDown(); //파일 양식 보여줌
+        $(this).parent().slideUp(); //미리 보기 영역 감춤
+        return false; //기본 이벤트 막음
+    });
+        
+    /** 
+    * 폼요소 초기화 
+    * Reset form element
+    * 
+    * @param e jQuery object
+    */
+    
+    function resetFormElement(e) {
+        e.wrap('<form>').closest('form').get(0).reset(); 
+        //리셋하려는 폼양식 요소를 폼(<form>) 으로 감싸고 (wrap()) , 
+        //요소를 감싸고 있는 가장 가까운 폼( closest('form')) 에서 Dom요소를 반환받고 ( get(0) ),
+        //DOM에서 제공하는 초기화 메서드 reset()을 호출
+        e.unwrap(); //감싼 <form> 태그를 제거
+    }
