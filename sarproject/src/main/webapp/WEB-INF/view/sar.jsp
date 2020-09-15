@@ -57,8 +57,6 @@
 						out.println("<idle>"+retval[i]+"</idle>");
 					}
 				}
-				
-				
 			}
 			linecount++;
 			

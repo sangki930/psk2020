@@ -45,9 +45,5 @@ var timer = setInterval('refresh_start()',<%=iauto%>);
  
  */
 </script>
-<%
-
-
-%>
 </body>
 </html>
