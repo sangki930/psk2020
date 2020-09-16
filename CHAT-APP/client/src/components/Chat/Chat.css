@@ -4,9 +4,9 @@
     align-items: center;
     height: 100vh;
     background-color: #1A1A1D;
+    
   }
-  
-  .container {
+.container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -16,7 +16,7 @@
     width: 35%;
   }
   
-  @media (min-width: 320px) and (max-width: 480px) {
+@media (min-width: 320px) and (max-width: 480px) {
     .outerContainer {
       height: 100%;
     }
@@ -27,7 +27,7 @@
     }
   }
   
-  @media (min-width: 480px) and (max-width: 1200px) {
+@media (min-width: 480px) and (max-width: 1200px) {
     .container {
       width: 60%;
     }

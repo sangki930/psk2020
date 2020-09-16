@@ -35,10 +35,12 @@ io.on('connection',(socket)=>{//소켓 io 접속
         // if(error){
         //     callback({error:error});
         // }
-        socket.emit('message',{user:'관리자',text:`${user.name}, ${user.room}에 입장을 환영합니다`});
-        socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name}님이 들어왔습니다` });
         //유저가 방에 들어올 때, 전체에게 메시지를 보냄
         socket.join(user.room);
+
+        socket.emit('message',{user:'관리자',text:`${user.name}, ${user.room}에 입장을 환영합니다`});
+        socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name}님이 들어왔습니다` });
+        
 
         io.to(user.room).emit('roomData',{room: user.room,users: getUsersInRoom(user.room)});
         
@@ -50,7 +52,7 @@ io.on('connection',(socket)=>{//소켓 io 접속
         const user = getUser(socket.id);
 
         io.to(user.room).emit('message',{user: user.name, text: message});
-        io.to(user.room).emit('roomData',{room: user.room, text: message});
+        io.to(user.room).emit('roomData',{room: user.room,users: getUsersInRoom(user.room)});
         callback();
     });
 

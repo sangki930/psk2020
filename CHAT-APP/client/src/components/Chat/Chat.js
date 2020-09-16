@@ -4,11 +4,14 @@ import io from 'socket.io-client';
 
 import './Chat.css';
 
+import ScrollToBottom from 'react-scroll-to-bottom';
+
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
 import TextContainer from '../TextContainer/TextContainer';
 let socket;
+
 
 
 const Chat = ({location}) =>{
@@ -43,12 +46,13 @@ const Chat = ({location}) =>{
 
 useEffect(()=>{
     socket.on('message',(message)=>{
-        setMessages([...messages,message]);
+        setMessages(messages=>[...messages,message]);
     });
 
     socket.on("roomData", ({ users }) => {
         setUsers(users);
       });
+    
 }, []);
 // },[message]);
 
@@ -61,21 +65,24 @@ const sendMessage = (event)=>{
     }
 }
 //메시지 시험 출력
-console.log(message,messages);
+// console.log(message,messages);
+
+
+/* <input value={message} onChange={(event)=>setMessage(event.target.value)} 
+            onKeyPress={event=>event.key==='Enter'?sendMessage(event):null} />  */
 
 return (
     // <h1>Chat</h1>
     <div className="outerContainer">
         <div className="container">
             <InfoBar room={room}/>
-            {/* <input value={message} onChange={(event)=>setMessage(event.target.value)} 
-            onKeyPress={event=>event.key==='Enter'?sendMessage(event):null} />  */}
             <Messages messages={messages} name={name} />
             <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
         </div>
+        
         <TextContainer users={users} />
     </div>
-    )//null은 아무것도 안하는 것
+    );//null은 아무것도 안하는 것
 }
 
 export default Chat;
