@@ -28,7 +28,7 @@ const TextContainer = ({users}) => (
             </div>
           </div>
         )
-        : <h2>실화냐???</h2>
+      :null
     }
   </div>
 );

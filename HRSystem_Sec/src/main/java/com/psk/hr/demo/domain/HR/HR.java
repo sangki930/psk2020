@@ -25,7 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.psk.hr.demo.domain.account.UserItem;
+import com.psk.hr.demo.domain.useritem.UserItem;
 import com.psk.hr.demo.enums.HRDept;
 
 import lombok.AllArgsConstructor;
@@ -135,21 +135,18 @@ public class HR {
 	private Boolean IsMarried;
 	//결혼여부
 	
-
-	
 	
 	/*
 	 * 일대일 매핑
 	 */
 //
-//	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+//	@OneToOne(fetch = FetchType.EAGER)
 	@JsonBackReference
 	@JoinColumn
 	private UserItem userItem;
 	
 
-	
 	/*
 	 * 일대다 매핑
 	 */
@@ -157,26 +154,31 @@ public class HR {
 	//@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="hr")
 	
 	
+//	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="hr")
 //	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="hr")
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="hr")
 	@JsonBackReference 
 	private Collection<HRUseritemEdu> edus;//학력사항
 
+//	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="hr")
 //	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="hr")
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="hr")
 	@JsonBackReference 
 	private Collection<HRUseritemCareer> careers;//경력사항 
 	
+//	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="hr")
 //	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="hr")
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="hr")
 	@JsonBackReference
 	private Collection<HRUseritemHistory> histories;//
 	
-//	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="hr")
+//	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="hr")
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="hr")
+//	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="hr")
 	@JsonBackReference
 	private Collection<HRUseritemParam> params;//인원 상세
 	
+//	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="hr")
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="hr")
 	//cascade : 부모가 지워졌을 때 자식을 처리,ALL은 모든자식을 처리
 	@JsonBackReference

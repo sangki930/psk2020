@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         security.authorizeRequests().antMatchers("/user/**").authenticated();
         // '/user'로 시작하는 경로에는 인증된 사용자만 접근 할 수 있다.
         security.authorizeRequests().antMatchers("/hr/**").hasRole("MEMBER");
-        // '/admin'으로 시작하는 경로에는 'ADMIN'권한을 가진 사용자만 접근할 수 있다.
+        // '/hr'으로 시작하는 경로에는 'ADMIN'권한을 가진 사용자만 접근할 수 있다.
         
         security.csrf().disable();
         security.formLogin().loginPage("/system/login")
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         security.exceptionHandling().accessDeniedPage("/system/accessDenied");
         //로그인 실패하면 /system/accessDenied로 이동
         security.logout().logoutUrl("/system/logout")
-        .invalidateHttpSession(true).logoutSuccessUrl("/");
+        .invalidateHttpSession(true).logoutSuccessUrl("/system/login");
         //사용자가 /system/logout 요청을 전송(즉, 로그아웃할려고 하면)하면 세션을 강제 종료하고
         //인덱스페이지로 이동
         

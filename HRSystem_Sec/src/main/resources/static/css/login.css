@@ -7,9 +7,9 @@
         }
         #loginform{
             border-radius: 4px;
-            margin: 20% 20% 20% 20%;
+            margin: 5% 20% 30% 30%;
             justify-content: center;
-            width : 500px;
+            width : 600px;
             height: 600px;
             display: flex;
             flex-direction: column;

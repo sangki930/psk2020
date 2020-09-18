@@ -13,7 +13,7 @@ import com.psk.hr.demo.domain.HR.HRUseritemEdu;
 import com.psk.hr.demo.domain.HR.HRUseritemHistory;
 import com.psk.hr.demo.domain.HR.HRUseritemParam;
 import com.psk.hr.demo.domain.HR.HRUseritemQualified;
-import com.psk.hr.demo.domain.account.UserItem;
+import com.psk.hr.demo.domain.useritem.UserItem;
 import com.psk.hr.demo.repo.HRRepository;
 import com.psk.hr.demo.repo.HRUseritemCareerRepository;
 import com.psk.hr.demo.repo.HRUseritemEduRepository;

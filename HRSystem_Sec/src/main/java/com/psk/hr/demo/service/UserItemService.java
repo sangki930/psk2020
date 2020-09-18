@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.psk.hr.demo.domain.account.UserItem;
+import com.psk.hr.demo.domain.useritem.UserItem;
 
 public interface UserItemService {
 	

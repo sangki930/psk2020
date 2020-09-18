@@ -8,7 +8,7 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.psk.hr.demo.domain.account.UserItem;
+import com.psk.hr.demo.domain.useritem.UserItem;
 
 import lombok.Getter;
 

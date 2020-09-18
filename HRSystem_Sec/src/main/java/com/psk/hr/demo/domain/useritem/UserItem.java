@@ -1,4 +1,4 @@
-package com.psk.hr.demo.domain.account;
+package com.psk.hr.demo.domain.useritem;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -74,8 +74,9 @@ public class UserItem {
 	/*
 	 * 일대일 매핑
 	 */
-//	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="userItem")
+	
 	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="userItem")
+//	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="userItem")
 	@JsonBackReference 
 	private HR hR;
 	

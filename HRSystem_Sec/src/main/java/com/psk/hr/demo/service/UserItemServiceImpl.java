@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.psk.hr.demo.domain.HR.HR;
-import com.psk.hr.demo.domain.account.UserItem;
+import com.psk.hr.demo.domain.useritem.UserItem;
 import com.psk.hr.demo.repo.HRRepository;
 import com.psk.hr.demo.repo.UserItemRepository;
 

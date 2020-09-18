@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.psk.hr.demo.domain.HR.HR;
 import com.psk.hr.demo.domain.HR.HRUseritemCareer;
 import com.psk.hr.demo.domain.HR.HRUseritemEdu;
-import com.psk.hr.demo.domain.account.UserItem;
+import com.psk.hr.demo.domain.useritem.UserItem;
 import com.psk.hr.demo.enums.HRDept;
 import com.psk.hr.demo.repo.HRUseritemCareerRepository;
 import com.psk.hr.demo.repo.HRUseritemEduRepository;

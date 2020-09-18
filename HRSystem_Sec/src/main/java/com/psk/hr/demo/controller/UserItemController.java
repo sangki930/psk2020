@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.psk.hr.demo.domain.account.UserItem;
+import com.psk.hr.demo.domain.useritem.UserItem;
 import com.psk.hr.demo.repo.UserItemRepository;
 import com.psk.hr.demo.repo.UserSpecs;
 import com.psk.hr.demo.service.UserItemService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping(value = {"/","/user"})
 //@Slf4j
 public class UserItemController {
 
@@ -82,8 +82,8 @@ public class UserItemController {
 	@PutMapping("/updateUser")
 	public String updateUser(UserItem userItem) {
 		
-		System.out.println(userItem.getUserId());
-		System.out.println(userItem.getTel());
+//		System.out.println(userItem.getUserId());
+//		System.out.println(userItem.getTel());
 		userItemService.updateUser(userItem);
 
 		return "redirect:getuserItemList";
@@ -141,7 +141,7 @@ public class UserItemController {
 		List<Long> list = new ArrayList<>();
 		
 		for (String str : check) {
-			System.out.println(str);
+//			System.out.println(str);
 			list.add(Long.parseLong(str));
 		}
 		

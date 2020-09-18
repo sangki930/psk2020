@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -13,6 +13,10 @@
 							</td>
 							<td width="20%">
 							<a id="uit" th:href="@{/hr/hrhome}">인사</a>
+							<td width="20%">
+							<span sec:authorize="hasRole('ROLE_MEMBER')">
+							<a id="uit" th:href="@{/system/logout}">로그아웃</a>
+							</span>
 						</td>
 						</tr>
 </table>
