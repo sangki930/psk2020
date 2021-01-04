@@ -5,11 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SecurityController {
-	
-	@GetMapping("/thymeleaf/system/lll")
-	public void lll() {
-		
-	}
     
     @GetMapping("/system/login")
     public String login() {

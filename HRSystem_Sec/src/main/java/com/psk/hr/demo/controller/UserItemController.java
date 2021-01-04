@@ -29,11 +29,14 @@ import com.psk.hr.demo.repo.UserItemRepository;
 import com.psk.hr.demo.repo.UserSpecs;
 import com.psk.hr.demo.service.UserItemService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping(value = {"/","/user"})
-//@Slf4j
+@Slf4j
 public class UserItemController {
 
+	
 	@SuppressWarnings("unused")
 	@Autowired
 	private UserItemService userItemService;
@@ -49,6 +52,7 @@ public class UserItemController {
 		Page<UserItem> userItemList = userItemService.getUserItemList(pageable);
 
 		model.addAttribute("userItemList", userItemList);
+		
 
 		return folder_name + "/getuserItemList";
 	}
@@ -111,7 +115,7 @@ public class UserItemController {
 //			searchKeys.put(key.toUpperCase(), searchRequest.get(key));
 //		}
 		
-			searchKeys.put((String) searchRequest.get("selectColumn"),(String) searchRequest.get("searchKeyword") );
+		searchKeys.put((String) searchRequest.get("selectColumn"),(String) searchRequest.get("searchKeyword") );
 		System.out.println("searchkeys : "+searchKeys);
 //	    List<?> list = searchKeys.isEmpty()
 //	            ? userRepo.findAll()
@@ -141,7 +145,6 @@ public class UserItemController {
 		List<Long> list = new ArrayList<>();
 		
 		for (String str : check) {
-//			System.out.println(str);
 			list.add(Long.parseLong(str));
 		}
 		
@@ -165,17 +168,16 @@ public class UserItemController {
 	}
 	
 
-	@RequestMapping("/getTest")
-	public String testt() {
-		return folder_name+"/getTest";
-	}
+//	@RequestMapping("/getTest")
+//	public String testt() {
+//		return folder_name+"/getTest";
+//	}
 	
 	@ResponseBody
 	@RequestMapping("/idcheck")
 	public short idcheck(@RequestBody String username) {
 		
-	System.out.println("idcheck확인");
-		
+		log.info("idcheck확인");
 		//UserItem compare = userItemService.get
 		if(userItemService.checkUsername(username)) {
 			return 1;//중복
