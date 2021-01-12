@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/static/css/common.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<!-- <h1>회원 가입</h1> -->
+	<table border=1 width="100%">
+		<tr>
+			<td bgcolor="skyblue" width="12.5%">Sitename</td>
+			<td width="12.5%"></td>
+			<td bgcolor="skyblue" width="12.5%">writer</td>
+			<td width="12.5%"></td>
+			<td bgcolor="skyblue" width="12.5%">Date</td>
+			<td width="12.5%"></td>
+			<td bgcolor="skyblue" width="12.5%">Version</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td width="12.5%" bgcolor="skyblue">Step ID</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="skyblue">Scene</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="skyblue">Part</td>
+			<td width="12.5%"></td>
+			<td width="12.5%" bgcolor="skyblue">Page</td>
+			<td width="12.5%"></td>
+		</tr>
+	</table>
+	<table border="1" width="100%" id="wrapper">
+		<tr>
+			<td id="menu" style="border-bottom: hidden;">
+				<div id="test" th:insert="thymeleaf/user/menutable::#menutable">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="contents" height="700px">
+				<div id="area" align="center">
+					&nbsp;
+					<form th:action="@{/user/updateUser}" th:method="post">
+		<table th:align="center" th:border="1" th:cellpadding="0" width=50%>
+			<tr> 
+				<td bgcolor="skyblue">아이디<input type="hidden" name="userId" th:value="${user.userId}" /></td>
+				<td th:text="${user.username}"></td>
+			</tr>
+			<tr>
+				<td bgcolor="skyblue">비밀번호</td>
+				<td><input name="username" type="password" size="20" width="50" th:value="${user.password}" readonly /></td>
+			</tr>
+			<tr>
+				<td bgcolor="skyblue">이메일</td>
+				<td><input name="email" type="text" size="20" width="50" th:value="${user.email}"></td>
+			</tr>
+			<tr>
+				<td bgcolor="skyblue">이름</td>
+				<td><input name="name" type="text" size="20" width="50" th:value="${user.name}"></td>
+			</tr>
+			<tr>
+				<td bgcolor="skyblue">연락처</td>
+				<td><input name="tel" type="text" size="20" width="50" th:value="${user.tel}"></td>
+			</tr>
+			<tr>
+				<td bgcolor="skyblue">생년월일</td>
+				<td><input name="birth" type="date" size="20" width="50" th:value="${user.birth}"></td>
+			</tr>
+			<tr>
+				<td bgcolor="skyblue">성별</td>
+				<td th:if="${user.gender}">
+				<input name="gender" type="checkbox" value="true" checked/>남 
+				<input name="gender" type="checkbox" value="false" />여
+				</td>
+				<td th:unless="${user.gender}">
+				<input name="gender" type="checkbox" value="true" />남 
+				<input name="birth" type="checkbox" value="false" checked/>여
+				</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2">
+				<input type="button" name="cancel" value="취소" th:OnClick="location.href='/user/getuserItemList'">
+				<input type="submit" name="update" value="수정">
+				<input type="button" name="delete" value="삭제" 
+				th:onclick="|javascript:location.href='/user/deleteUser?userId=${user.userId}'|">
+				</td>
+			</tr>
+		</table>
+		</form>
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+	<!-- </form> -->
+	<br>
+	<br>
+</body>
+</html>

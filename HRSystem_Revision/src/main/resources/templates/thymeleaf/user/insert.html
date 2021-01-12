@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/static/css/common.css" rel="stylesheet" type="text/css" />
+<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+	<script>
+function checkid(){
+	
+	var data={
+			username : $("#username").val()
+		};
+		alert('check 확인');
+		$.ajax({
+			type: "POST",
+			url: "/user/idcheck",
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			data:data.username,
+			success : function(value){
+				console.log(data.username);
+				if(data===""){
+					alert('아이디를 입력하세요!');
+				}
+				else if(value == 1 ){
+					alert('해당아이디가 존재합니다.');
+					$("#submit").attr("disabled","disabled");
+				}else{
+					alert('사용가능한 아이디입니다.');
+					$("#submit").removeAttr("disabled");
+				}
+		}
+		});
+}
+/*영문, 숫자, 특수문자 혼합*/
+function chkPW(){
+
+	console.log('이벤트 발동');
+
+	var pw = $("#password").val();
+	console.log(pw);
+	console.log(pw.search(/[0-9]/g));
+	var num = pw.search(/[0-9]/g);
+	var eng = pw.search(/[a-z]/ig);
+	var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+	if(pw.length < 8 || pw.length > 20){
+
+	    $("#password_check").show();
+	    $("#password_check").text("8자리 ~ 20자리 이내로 입력해주세요.");
+	 return false;
+	}else if(pw.search(/\s/) != -1){
+	 alert("비밀번호는 공백 없이 입력해주세요.");
+	 return false;
+	}else if(num < 0 || eng < 0 || spe < 0 ){
+	 alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+	 return false;
+	}else {
+	   console.log("통과"); 
+	   return true;
+	}
+
+}
+function chkName(){
+	var inputLen = $("#name").val().length;
+    var chkBlank = /\s/g;
+    var chkResult = chkBlank.test( $("#name").val() );
+    
+    //길이에 맞지 않거나 공백이 포함되어 있는 경우
+    if((inputLen < 1 || inputLen > 20) || chkResult ){            
+                  
+       alert("공백을 포함할 수 없습니다!");
+    }else{            
+       
+      console.log("올바르게 입력");
+    }
+}
+function enroll(){
+	
+}
+</script>
+<style>
+#password_check{
+	font-size : 8px;	
+}
+</style>
+</head>
+<body>
+	<table th:insert="thymeleaf/user/head::#head">
+	</table>
+	<table border="1" width="100%" id="wrapper">
+		<tr>
+			<td id="menu" style="border-bottom: hidden;">
+				<div id="test" th:insert="thymeleaf/user/menutable::#menutable">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="contents" height="700px">
+				<div id="area" align="center">
+					&nbsp;
+					<h3 align="left">회원 추가</h3>
+					<br> <br>
+					<form th:action="@{/user/insertUser_1}" method="post" autocomplete="off">
+						<table th:align="center" th:border="1" th:cellpadding="0" width="50%">
+							<!-- <tr>
+								<td colspan="2" id="status">아직 입력이 되지 않았습니다.</td>
+							</tr> -->
+							<tr>
+								<td bgcolor="skyblue">아이디</td>
+								<td><input id="username" name="username" type="text" size="20" width="50">
+									<button type="button" id="idcheck" onClick="checkid();">
+										중복체크
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">이메일</td>
+								<td><input name="email" type="text" size="20" width="50"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">비밀번호</td>
+								<td><input name="password" type="password" id="password" size="20"
+									width="50" onkeyup="chkPW();" placeholder="영문,숫자,특수문자 혼합">
+									<p id="password_check">8자리 ~ 20자리 이내로 입력해주세요.</p>
+									</td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">이름</td>
+								<td><input id="name" name="name" type="text" size="20" width="50" 
+								onkeyup="chkName();" placeholder="공백입력불가"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">연락처</td>
+								<td><input name="tel" type="number" size="20" width="50"
+								placeholder="숫자만 입력하세요"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">생년월일</td>
+								<td><input name="birth" type="date" size="20" width="50"></td>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue">성별</td>
+								<td><label><input type="radio" name="gender" value="1"> 남자</label> 
+								<label><input type="radio"
+										name="gender" value="0"> 여자</label>
+							</tr>
+							<tr>
+								<td bgcolor="skyblue" align="center" colspan="2">
+								<input id="submit" type="submit" value="회원 등록" disabled="disabled">
+								<!-- <input type="button" id="submit" value="회원등록" disabled="disabled" onclick="enroll();" > -->
+								<input type="button" value="목록" th:attr="onclick=|location.href='@{/user/getuserItemList}'|">
+								</td>
+							</tr>
+						</table>
+					</form>
+					
+				</div>
+			</td>
+		</tr>
+	</table>
+		<!-- 		
+    th:with는 해당 태그를 scope로 갖는 변수를 선언할 수 있게 해주는 속성이다.
+start=${T(Math).floor(userItemList.number/10)*10 + 1} : 현제 페이지를 통해 현재 페이지 그룹의 시작 페이지를 구하는 로직이다.
+last=(${start + 9 < userItemList.totalPages ? start + 9 : userItemList.totalPages}) : 전체 페이지 수와 현재 페이지 
+그룹의 시작 페이지를 통해 현재 페이지 그룹의 마지막 페이지를 구하는 로직이다. -->
+</body>
+</html>
+
