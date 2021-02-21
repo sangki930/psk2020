@@ -8,7 +8,7 @@ import com.psk.hr.demo.domain.HR.HR;
 
 public interface HRService {
 
-	String hello(String name);
+	String hello(String name);//테스트 메소드
 	
 	void insertHR(HR hR);//회원추가
 	void deleteHR(HR hR);//회원삭제

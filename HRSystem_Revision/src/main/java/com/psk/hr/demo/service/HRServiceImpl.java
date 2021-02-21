@@ -1,7 +1,5 @@
 package com.psk.hr.demo.service;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +31,17 @@ public class HRServiceImpl implements HRService {
 	@Transactional
 	public HR getHR(HR hR) {
 		// TODO Auto-generated method stub
-		
 		hR = hRRepository.findById(hR.getId()).get();
-		
-		
-//		hR.setEdus(hRUseritemEduRepository.findAllById(hR.getId()));
-//		hR.setCareers(hRUseritemCareerRepository.findAll());
-		
 		return hR;
 	}
 
+	@Override
+	@Transactional
+	public HR getHR(Long id) {
+		// TODO Auto-generated method stub
+		return hRRepository.findById(id).get();
+	}
+	
 	@Override
 	public Page<HR> getHRList(Pageable pageable,Specification<HR> spec) {
 
@@ -51,10 +50,6 @@ public class HRServiceImpl implements HRService {
 		
 		return hRRepository.findAll(spec,pageable);
 	}
-	
-
-	
-	
 
 	@Override
 	public void insertHR(HR hR) {
@@ -97,7 +92,8 @@ public class HRServiceImpl implements HRService {
 		updateHr.setTypeEntrance(hR.getTypeEntrance());
 		updateHr.setTypeObstacle(hR.getTypeObstacle());
 		updateHr.setTypeWorking(hR.getTypeWorking());
-		
+
+		//빌더 패턴
 //		updateHr=HR.builder()
 //				.id(hR.getId())
 //				.careers(hR.getCareers())
@@ -124,9 +120,7 @@ public class HRServiceImpl implements HRService {
 //				.userItem(hR.getUserItem())
 //				.build();
 		
-		
 		hRRepository.save(updateHr);
-		
 		
 	}
 
@@ -134,15 +128,6 @@ public class HRServiceImpl implements HRService {
 	public String hello(String name) {
 		// TODO Auto-generated method stub
 		return "hello : "+name;
-	}
-
-	@Override
-	@Transactional
-	public HR getHR(Long id) {
-		// TODO Auto-generated method stub
-		HR hr = hRRepository.findById(id).get();
-
-		return hr;
 	}
 
 }
