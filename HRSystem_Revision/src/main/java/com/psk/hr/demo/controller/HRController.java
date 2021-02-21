@@ -121,22 +121,15 @@ public class HRController {
 		@GetMapping("/searchHr")
 		public String getPostList(@RequestParam(required = false) Map<String, Object> searchRequest, Model model,
 				Pageable pageable) {
-			
-//			System.out.println(searchRequest);
-			Map<String, Object> searchKeys = new HashMap<>();
 
-				searchKeys.put((String) searchRequest.get("selectColumn"),(String) searchRequest.get("searchKeyword") );
-//			System.out.println("searchKeys : "+searchKeys);			
+			Map<String, Object> searchKeys = new HashMap<>();
+			searchKeys.put((String) searchRequest.get("selectColumn"),(String) searchRequest.get("searchKeyword") );		
 
 			Page<HR> list = searchKeys.isEmpty() ? (Page<HR>) hRRepo.findAll()
 					: hRService.getHRList(pageable,HRSpecs.search(searchKeys));
 
-//			System.out.println("결과 : "+list);
-
 			model.addAttribute("hrList", list);
 			model.addAttribute("selectColumn",(String)searchRequest.get("selectColumn"));
-//			System.out.println("여기 오는 지 확인");
-//			System.out.println("확인 : "+(String)searchKeys.get("selectColumn")+" , "+(String)searchKeys.get("searchKeyword"));
 			model.addAttribute("searchKeyword",(String)searchRequest.get("searchKeyword"));
 			
 			return folder_name + "hrhome";

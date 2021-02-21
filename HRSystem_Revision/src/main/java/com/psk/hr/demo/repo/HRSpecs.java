@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 
-import org.hibernate.sql.JoinType;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.psk.hr.demo.domain.HR.HR;
@@ -43,11 +42,9 @@ public class HRSpecs {
 			List<Predicate> predicates = new ArrayList<>();
 			filter.forEach((key,value)->{
 				String likevalue="%"+value+"%";
-				System.out.println("key값 : "+key);
-				System.out.println("value값: " +value);
-				System.out.println(query);
-				
-				
+//				System.out.println("key값 : "+key);
+//				System.out.println("value값: " +value);
+//				System.out.println(query);
 				switch(key) {
 				case "selectColumn":
 					break;
