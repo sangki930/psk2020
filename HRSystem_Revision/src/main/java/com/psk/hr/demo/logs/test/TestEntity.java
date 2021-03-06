@@ -23,6 +23,4 @@ public class TestEntity {
 	
 	@Field("record")
 	private String record;
-	
-	
 }

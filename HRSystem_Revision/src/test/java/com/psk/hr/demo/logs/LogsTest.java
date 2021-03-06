@@ -1,33 +1,32 @@
 package com.psk.hr.demo.logs;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.psk.hr.demo.logs.test.TestEntity;
-import com.psk.hr.demo.repo.TestEntityRepository;
+import com.psk.hr.demo.logs.repo.ConnectLogRepository;
 
 @SpringBootTest
 public class LogsTest {
 
 	@Autowired
-	TestEntityRepository tr;
+	ConnectLogRepository clrepo;
 	
 	@Test
-	public void insert() {
-		
-		TestEntity te = TestEntity.builder()
-				.record("adasd")
-				.build();
-		tr.save(te);
-		
-//		for(TestEntity t : tr.findAll())
-//			System.out.println(t.toString());
-		tr.deleteAll();
+	public void insertTest() {
+	
+		ConnectLog cl = ConnectLog.builder()
+				.username("asdasd")
+				.time(LocalDateTime.now())
+				.msg("dsdsd").build();
+		clrepo.insert(cl);
+		System.out.println(clrepo.findByUsername("asdasd"));
 	}
 	
 	@Test
-	public void delete() {
-		tr.deleteAll();
+	public void getTest() {
+		//생략
 	}
 }

@@ -37,7 +37,7 @@ public class HRUseritemParam {
 	private String value;
 	
 	@ManyToOne(optional=false)
-//	@JoinColumn(name="emp_id")
+
 	@JoinColumn
 	@JsonManagedReference
 	private HR hr;
