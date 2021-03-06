@@ -49,7 +49,7 @@ cnt_edu=${#lists.size(hr.edus)}, cnt_career=${#lists.size(hr.careers)},cnt_quali
 			<td id="contents" height="700px">
 				<div id="area" align="center">
 					<h3>인사 기본 상세</h3>
-					<form name="hrform" th:action="@{/hr/updateHr}">
+					<form name="hrform" th:action="@{/hr/updateHr}" method="post">
 					<input type="hidden" name="id" th:value="${hr.id}" />
 					<input type="hidden" name="userId" th:value="${hr.getUserItem().userId}" />
 					<table id="detail" width="71.5%" border="1">
@@ -173,12 +173,6 @@ cnt_edu=${#lists.size(hr.edus)}, cnt_career=${#lists.size(hr.careers)},cnt_quali
 						
 					</table>
 					</form>
-				<!-- 	<script>
-						$('[name="updatehr"]').click(function(){ //댓글 등록 버튼 클릭시 
-						    var insertData = $('[name=hrform]').serialize(); //commentInsertForm의 내용을 가져옴
-						    alert(insertData);
-						});
-					</script> -->
 					<div class="tab">
 						<button class="tablinks" onclick="openCity(event, 'person')" id="persontab">인사 상세</button>
 						<button class="tablinks" onclick="openCity(event, 'school')">학력</button>

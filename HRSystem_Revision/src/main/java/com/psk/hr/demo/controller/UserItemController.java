@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.psk.hr.demo.domain.useritem.UserItem;
+import com.psk.hr.demo.enums.Role;
 import com.psk.hr.demo.repo.UserItemRepository;
 import com.psk.hr.demo.repo.UserSpecs;
 import com.psk.hr.demo.service.UserItemService;
@@ -46,16 +47,13 @@ public class UserItemController {
 
 	private static final String folder_name = "thymeleaf/user";
 
-	@RequestMapping("/getuserItemList")
+	@RequestMapping(value={"/getuserItemList","/"})
 	public String member(Pageable pageable, Model model) {
-
 		Page<UserItem> userItemList = userItemService.getUserItemList(pageable);
-
 		model.addAttribute("userItemList", userItemList);
-		
-
 		return folder_name + "/getuserItemList";
 	}
+	
 
 	@GetMapping("/getUser")
 	public String getUser(UserItem userItem, Model model) {
@@ -75,7 +73,7 @@ public class UserItemController {
 	@PostMapping("/insertUser_1")
 	@Transactional
 	public String insertUser(@ModelAttribute UserItem userItem) {
-
+		userItem.setRole(Role.ROLE_MEMBER);
 		userItemService.insertUser(userItem);
 
 		return "redirect:getuserItemList";
@@ -84,6 +82,7 @@ public class UserItemController {
 
 	// 글 수정
 	@PutMapping("/updateUser")
+	@Transactional
 	public String updateUser(UserItem userItem) {
 		
 //		System.out.println(userItem.getUserId());
@@ -93,7 +92,7 @@ public class UserItemController {
 		return "redirect:getuserItemList";
 	}
 
-	// 글 삭제
+	// 회원 삭제
 	@DeleteMapping("/deleteUser")
 	public String deleteUser(UserItem userItem) {
 
@@ -101,7 +100,6 @@ public class UserItemController {
 		
 		return "forward:getuserItemList";
 	}
-	
 
 	// 검색
 	@GetMapping("/searchUser")
@@ -140,7 +138,7 @@ public class UserItemController {
 	@PostMapping("/deletelist")
 	public ModelAndView paramtest(@RequestParam(value="check")String[] check) throws Exception{
 
-		System.out.println(check);
+//		System.out.println(check);
 		
 		List<Long> list = new ArrayList<>();
 		
@@ -166,12 +164,7 @@ public class UserItemController {
 		
 		return mv;
 	}
-	
 
-//	@RequestMapping("/getTest")
-//	public String testt() {
-//		return folder_name+"/getTest";
-//	}
 	
 	@ResponseBody
 	@RequestMapping("/idcheck")

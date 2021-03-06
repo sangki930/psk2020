@@ -2,12 +2,12 @@ package com.psk.hr.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.psk.hr.demo.service.SecurityUserDetailsService;
 
@@ -24,12 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         
         security.authorizeRequests().antMatchers("/system/**").permitAll();
         // '/'와 'system'으로 시작하는 경로에는 인증되지 않은 모든 사용자가 접근
-        security.authorizeRequests().antMatchers("/user/**").authenticated();
+        security.authorizeRequests().antMatchers("/","/user/**").authenticated();
         // '/user'로 시작하는 경로에는 인증된 사용자만 접근 할 수 있다.
         security.authorizeRequests().antMatchers("/hr/**").hasRole("ADMIN");
         // '/hr'으로 시작하는 경로에는 'ADMIN'권한을 가진 사용자만 접근할 수 있다.
-        
-        
         
         security.csrf().disable();//CSRF 공격 방지
 
@@ -54,8 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     //암호화 빈 등록
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        
     }
     
-        
+//    @Autowired 
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{ 
+//    	auth.inMemoryAuthentication().withUser("sangki930")
+//    	.password("{noop}sangki930")
+//    	.roles("ADMIN"); 
+//    	}
+
 }

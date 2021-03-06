@@ -65,7 +65,7 @@ public class HRController {
 	
 	
 	@GetMapping("/getHr")
-	@Transactional
+//	@Transactional
 	public String getHr(HR hr,Model model) {
 		
 		hr=hRService.getHR(hr.getId());
@@ -96,7 +96,7 @@ public class HRController {
 	
 	
 	
-	@PutMapping("/updateHr")
+	@PostMapping("/updateHr")
 	public String updateHr(HR hr,UserItem userItem){
 		
 		System.out.println("업데이트");
@@ -112,7 +112,6 @@ public class HRController {
 	
 	@DeleteMapping("/deleteHr")
 	public String deleteHr(Long id) {
-		
 		hRService.deleteHR(hRService.getHR(id));
 		return "redirect:getHrList";
 	}

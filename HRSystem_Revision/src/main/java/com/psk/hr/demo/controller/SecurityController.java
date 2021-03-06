@@ -8,6 +8,7 @@ public class SecurityController {
     
     @GetMapping("/system/login")
     public String login() {
+    	System.out.println("go login");
 		return "thymeleaf/system/login";}
     @GetMapping("/system/accessDenied")
     public String accessDenied() {

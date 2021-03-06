@@ -18,7 +18,7 @@ public class SecurityUser extends User{
 		
 		super(userItem.getUsername(), "{noop}"+userItem.getPassword(), 
 				AuthorityUtils.createAuthorityList(userItem.getRole().toString()));
-		System.out.println(userItem.toString());
+		System.out.println("확인 : "+userItem.toString());
 		this.userItem = userItem;
 		
 	}
