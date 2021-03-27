@@ -6,9 +6,12 @@
 <link href="/static/css/common.css" rel="stylesheet" type="text/css" />
 <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
-	<script>
+<script>
+var isChkId=false;
+var isChkPW=false;
+var isChkName=false;
+var isOk=false;
 function checkid(){
-	
 	var data={
 			username : $("#username").val()
 		};
@@ -23,46 +26,62 @@ function checkid(){
 				console.log(data.username);
 				if(data===""){
 					alert('아이디를 입력하세요!');
+					isChkId=false;
 				}
 				else if(value == 1 ){
 					alert('해당아이디가 존재합니다.');
+					isChkId=false;
 					$("#submit").attr("disabled","disabled");
 				}else{
 					alert('사용가능한 아이디입니다.');
-					$("#submit").removeAttr("disabled");
+					isChkId=true;
+					/* $("#submit").removeAttr("disabled"); */
 				}
 		}
 		});
+		isOk=allChk(isChkId,isChkPW,isChkName);
+		if(isOk)
+			$("#submit").prop("disabled",false);
+		else
+			$("#submit").prop("disabled",true);
 }
+
+
 /*영문, 숫자, 특수문자 혼합*/
 function chkPW(){
 
 	console.log('이벤트 발동');
 
 	var pw = $("#password").val();
-	console.log(pw);
-	console.log(pw.search(/[0-9]/g));
+	/* console.log(pw);
+	console.log(pw.search(/[0-9]/g)); */
 	var num = pw.search(/[0-9]/g);
 	var eng = pw.search(/[a-z]/ig);
 	var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
 	if(pw.length < 8 || pw.length > 20){
-
 	    $("#password_check").show();
 	    $("#password_check").text("8자리 ~ 20자리 이내로 입력해주세요.");
-	 return false;
+	    alert("8자리 ~ 20자리 이내로 입력해주세요.")
+	    isChkPW=false;
 	}else if(pw.search(/\s/) != -1){
 	 alert("비밀번호는 공백 없이 입력해주세요.");
-	 return false;
+	 isChkPW=false;
 	}else if(num < 0 || eng < 0 || spe < 0 ){
 	 alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
-	 return false;
+	 isChkPW=false;
 	}else {
-	   console.log("통과"); 
-	   return true;
+	   console.log("통과");
+	   isChkPW=true;
 	}
-
+	isOk=allChk(isChkId,isChkPW,isChkName);
+	if(isOk)
+		$("#submit").prop("disabled",false);
+	else
+		$("#submit").prop("disabled",true);
 }
+
+//유효한 이름인지
 function chkName(){
 	var inputLen = $("#name").val().length;
     var chkBlank = /\s/g;
@@ -72,14 +91,24 @@ function chkName(){
     if((inputLen < 1 || inputLen > 20) || chkResult ){            
                   
        alert("공백을 포함할 수 없습니다!");
+       isChkName=false;
     }else{            
-       
       console.log("올바르게 입력");
+      isChkName=true;
     }
+    isOk=allChk(isChkId,isChkPW,isChkName);
+	if(isOk)
+		$("#submit").prop("disabled",false);
+	else
+		$("#submit").prop("disabled",true);
 }
-function enroll(){
-	
+// 전부 유효하면 등록 활성화
+function allChk(ok1,ok2,ok3){
+	if(ok1 && ok2 && ok3)
+		return true;
+	return false;
 }
+
 </script>
 <style>
 #password_check{
@@ -123,7 +152,7 @@ function enroll(){
 							<tr>
 								<td bgcolor="skyblue">비밀번호</td>
 								<td><input name="password" type="password" id="password" size="20"
-									width="50" onkeyup="chkPW();" placeholder="영문,숫자,특수문자 혼합">
+									width="50" onfocusout="chkPW();" placeholder="영문,숫자,특수문자 혼합">
 									<p id="password_check">8자리 ~ 20자리 이내로 입력해주세요.</p>
 									</td>
 							</tr>
@@ -156,7 +185,6 @@ function enroll(){
 							</tr>
 						</table>
 					</form>
-					
 				</div>
 			</td>
 		</tr>
